@@ -1,6 +1,31 @@
 import Link from "next/link";
 
+const TodoRepository = {
+  async getAll() {
+    const url = "https://jsonplaceholder.typicode.com/todos";
+
+    const res = (await (await fetch(url)).json()) as {
+      userId: string;
+      id: number;
+      title: string;
+      completed: boolean;
+    }[];
+
+    return res;
+  },
+};
+
 async function getData() {
+  // TODO, fetch api error handling?
+
+  // below just for sample api calling
+  // const res = await TodoRepository.getAll();
+  // const postListData = res.map((todo) => ({
+  //   id: todo.id.toString(),
+  // }));
+
+  // console.log("res", res);
+
   const postListData = [1, 2, 3].map((id) => ({
     id: String(id),
   }));
