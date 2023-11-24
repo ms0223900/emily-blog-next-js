@@ -18,7 +18,7 @@ export default async function Home() {
       <div>
         {homepageData.posts.map((post) => (
           <Link
-            className="rounded-sm p-8 bg-white shadow-sm m-2 cursor-pointer hover:shadow-md"
+            className="inline-block rounded-sm p-8 bg-white shadow-sm m-2 cursor-pointer hover:shadow-md"
             key={post.id}
             href={`/post/${post.id}`}
           >
