@@ -10,4 +10,13 @@ const PostWithId: React.FC<{ params: { id: string } }> = ({
   );
 };
 
+export async function generateStaticParams(): Promise<{ id: string }[]> {
+  // TODO
+  // fetch post ids or all posts
+
+  return [1, 2, 3].map((id) => ({
+    id: String(id),
+  }));
+}
+
 export default memo(PostWithId);
