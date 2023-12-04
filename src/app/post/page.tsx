@@ -1,18 +1,47 @@
 import Link from "next/link";
 import React, { memo } from "react";
 
-const Posts = () => {
+export interface SinglePost {
+  id: number;
+  title: string;
+}
+
+export interface PostsProps {
+  postList: SinglePost[];
+}
+
+const Posts = async () => {
+  const postList = (await fetchPosts()).postList;
+
   return (
     <div className="p-10">
       <h1 className={`text-xl`}>All Posts Here :)</h1>
-      <div className="p-4 shadow-md rounded-md">
-        <Link href={"/post/1"}>Post 1</Link>
-        <Link href={"/post/2"}>Post 2</Link>
-        <Link href={"/post/3"}>Post 3</Link>
-        <Link href={"/post/4"}>Post 4</Link>
-      </div>
+      {postList.map((post) => (
+        <Link
+          key={post.id}
+          className="block p-4 bg-white m-2 hover:bg-gray-50"
+          href={`/post/${post.id}`}
+        >
+          {post.title}
+        </Link>
+      ))}
     </div>
   );
 };
+
+export async function fetchPosts(): Promise<PostsProps> {
+  // TODO
+  // fetch post ids or all posts
+
+  return {
+    postList: Array(10)
+      .fill(0)
+      .map((_, i) => i)
+      .map((id) => ({
+        id: id,
+        title: `Title-${id}`,
+      })),
+  };
+}
 
 export default memo(Posts);
