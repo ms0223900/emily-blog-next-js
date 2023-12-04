@@ -1,3 +1,4 @@
+import PostRepository from "@/repos/post/PostRepository";
 import Link from "next/link";
 import React, { memo } from "react";
 
@@ -30,17 +31,10 @@ const Posts = async () => {
 };
 
 export async function fetchPosts(): Promise<PostsProps> {
-  // TODO
-  // fetch post ids or all posts
+  const posts = await PostRepository.getPosts();
 
   return {
-    postList: Array(10)
-      .fill(0)
-      .map((_, i) => i)
-      .map((id) => ({
-        id: id,
-        title: `Title-${id}`,
-      })),
+    postList: posts,
   };
 }
 
