@@ -30,7 +30,7 @@ const Posts = async () => {
   );
 };
 
-export async function fetchPosts(): Promise<PostsProps> {
+async function fetchPosts(): Promise<PostsProps> {
   const posts = await PostRepository.getPosts();
 
   return {
