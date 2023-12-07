@@ -2,7 +2,7 @@ import { getSheetApiUrl } from "./config";
 
 async function asyncFetchSheetData(sheetName: string) {
   return fetch(getSheetApiUrl(sheetName), {
-    cache: "no-store",
+    // cache: "no-store",
   })
     .then((res) => res.json())
     .catch((e) => {
