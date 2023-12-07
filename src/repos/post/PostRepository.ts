@@ -1,9 +1,17 @@
 import { asyncFetchSingleSheetData } from "@/mapper";
+import { log } from "console";
 
 const PostRepository = {
   getPosts: async () => {
-    // const data = await asyncFetchSingleSheetData("posts");
-    // console.log(data);
+    // TODO
+    const data = await asyncFetchSingleSheetData("posts");
+    console.log(data);
+    const posts = data.values.map((rowVal: string[]) => ({
+      id: rowVal[0],
+      title: rowVal[1],
+    }));
+    // log("posts", posts);
+    return posts;
 
     return Array(8)
       .fill(0)
