@@ -1,5 +1,9 @@
 import { asyncFetchSingleSheetData } from "@/mapper";
 import { log } from "console";
+import { Post } from "./types";
+
+type PostKey = keyof Post;
+const POST_COLS = ["id", "title", "description", "content"] as PostKey[];
 
 const PostRepository = {
   getPosts: async () => {
@@ -20,6 +24,24 @@ const PostRepository = {
         id: id,
         title: `Title-${id}`,
       }));
+  },
+
+  getPostById: async (id: number | string) => {
+    const data = await asyncFetchSingleSheetData("posts");
+
+    const postRow = data.values.find(
+      (rowVal: string[]) => rowVal[0] === String(id)
+    ) as string[] | undefined;
+    if (!postRow) throw new Error(`POST_${id}_NOT_FOUND!`);
+
+    return (() => {
+      const res = {} as Post;
+      for (let i = 0; i < POST_COLS.length; i++) {
+        const col = POST_COLS[i];
+        res[col] = postRow[i];
+      }
+      return res;
+    })() as Post;
   },
 };
 
