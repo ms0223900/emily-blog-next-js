@@ -1,3 +1,4 @@
+import HomeHomepageRepository from "@/repos/homepage/HomepageRepository";
 import Link from "next/link";
 
 async function getData() {
@@ -10,6 +11,7 @@ async function getData() {
   // }));
 
   // console.log("res", res);
+  // const homepageData = await HomeHomepageRepository.getData();
 
   const postListData = [1, 2, 3].map((id) => ({
     id: String(id),
