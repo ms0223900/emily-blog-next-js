@@ -1,20 +1,5 @@
 import Link from "next/link";
 
-const TodoRepository = {
-  async getAll() {
-    const url = "https://jsonplaceholder.typicode.com/todos";
-
-    const res = (await (await fetch(url)).json()) as {
-      userId: string;
-      id: number;
-      title: string;
-      completed: boolean;
-    }[];
-
-    return res;
-  },
-};
-
 async function getData() {
   // TODO, fetch api error handling?
 
