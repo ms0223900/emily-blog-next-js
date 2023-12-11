@@ -2,6 +2,7 @@ import { asyncFetchSingleSheetData } from "@/mapper";
 import PostRepository from "../post/PostRepository";
 import { log } from "console";
 import SheetDataHelper from "../utils/SheetDataHelper";
+import { Post } from "../post/types";
 
 const HOMEPAGE_COLS = ["postId", "postTitle"];
 
@@ -23,10 +24,14 @@ const HomeHomepageRepository = {
         key: "id",
         data: posts,
       }
-    );
+    ) as Post[]; // TODO, use real type
+
+    const homepageFinalData = {
+      posts: res,
+    };
     // log("res", res);
 
-    return res;
+    return homepageFinalData;
   },
 };
 
