@@ -1,4 +1,5 @@
 import PostRepository from "@/repos/post/PostRepository";
+import { log } from "console";
 import React, { memo } from "react";
 
 const PostWithId: React.FC<{ params: { id: string } }> = async ({
@@ -8,18 +9,19 @@ const PostWithId: React.FC<{ params: { id: string } }> = async ({
 
   return (
     <div>
-      <h1>{`Id: ${id} -- ${postData.title}`}</h1>
-      <h2>{postData.description}</h2>
-      <p>{postData.content}</p>
+      <h1 className="text-2xl">{`Id: ${id} -- ${postData.title}`}</h1>
+      <h2 className="text-xl">{postData.description}</h2>
+      <hr />
+      <p className="whitespace-pre-wrap">{postData.content}</p>
     </div>
   );
 };
 
 export async function generateStaticParams(): Promise<{ id: string }[]> {
-  // TODO
-  // fetch post ids or all posts
+  const posts = await PostRepository.getPosts();
+  log("postssss", posts);
 
-  return [1, 2, 3].map((id) => ({
+  return posts.map(({ id }) => ({
     id: String(id),
   }));
 }
