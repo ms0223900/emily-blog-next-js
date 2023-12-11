@@ -11,15 +11,13 @@ async function getData() {
   // }));
 
   // console.log("res", res);
-  // const homepageData = await HomeHomepageRepository.getData();
+  const homepageData = await HomeHomepageRepository.getData();
 
-  const postListData = [1, 2, 3].map((id) => ({
-    id: String(id),
-  }));
+  // const postListData = [1, 2, 3].map((id) => ({
+  //   id: String(id),
+  // }));
 
-  return {
-    posts: postListData,
-  };
+  return homepageData;
 }
 
 export default async function Home() {
@@ -27,14 +25,16 @@ export default async function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div>
+      <div className="grid grid-cols-12 gap-2 flex-wrap">
         {homepageData.posts.map((post) => (
           <Link
-            className="inline-block rounded-sm p-8 bg-white shadow-sm m-2 cursor-pointer hover:shadow-md"
+            className="block rounded-sm p-8 bg-white shadow-sm cursor-pointer hover:shadow-md col-span-4"
             key={post.id}
             href={`/post/${post.id}`}
           >
-            <h1>{`Post -- ${post.id}`}</h1>
+            <h2>{post.title}</h2>
+            <hr />
+            <p>{post.description}</p>
           </Link>
         ))}
       </div>
