@@ -4,14 +4,14 @@ import { Post } from "./types";
 import SheetDataHelper from "../utils/SheetDataHelper";
 
 type PostKey = keyof Post;
-const POST_COLS = [
+const POST_COLS: PostKey[] = [
   "id",
   "title",
   "description",
   "content",
   "tags",
   "isPublished",
-] as PostKey[];
+];
 
 const PostRepository = {
   getPosts: async () => {
@@ -23,14 +23,6 @@ const PostRepository = {
     );
     log("posts", posts);
     return posts;
-
-    return Array(8)
-      .fill(0)
-      .map((_, i) => i)
-      .map((id) => ({
-        id: id,
-        title: `Title-${id}`,
-      }));
   },
 
   getPostById: async (id: number | string) => {
@@ -41,14 +33,7 @@ const PostRepository = {
     ) as string[] | undefined;
     if (!postRow) throw new Error(`POST_${id}_NOT_FOUND!`);
 
-    return (() => {
-      const res = {} as Post;
-      for (let i = 0; i < POST_COLS.length; i++) {
-        const col = POST_COLS[i];
-        res[col] = postRow[i];
-      }
-      return res;
-    })() as Post;
+    return SheetDataHelper.toValueObject(postRow, POST_COLS);
   },
 };
 
