@@ -1,20 +1,27 @@
 import { asyncFetchSingleSheetData } from "@/mapper";
 import { log } from "console";
 import { Post } from "./types";
+import SheetDataHelper from "../utils/SheetDataHelper";
 
 type PostKey = keyof Post;
-const POST_COLS = ["id", "title", "description", "content"] as PostKey[];
+const POST_COLS = [
+  "id",
+  "title",
+  "description",
+  "content",
+  "tags",
+  "isPublished",
+] as PostKey[];
 
 const PostRepository = {
   getPosts: async () => {
     // TODO
     const data = await asyncFetchSingleSheetData("posts");
     console.log(data);
-    const posts = data.values.map((rowVal: string[]) => ({
-      id: rowVal[0],
-      title: rowVal[1],
-    }));
-    // log("posts", posts);
+    const posts = data.values.map((rowVal: string[]) =>
+      SheetDataHelper.toValueObject(rowVal, POST_COLS)
+    );
+    log("posts", posts);
     return posts;
 
     return Array(8)
