@@ -10,7 +10,9 @@ async function asyncFetchSheetData(sheetName: string) {
     });
 }
 
-export async function asyncFetchSingleSheetData(sheetName: string) {
+export async function asyncFetchSingleSheetData(sheetName: string): Promise<{
+  values: string[][];
+}> {
   const data = await asyncFetchSheetData(sheetName);
   return data;
 }
