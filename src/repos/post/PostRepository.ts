@@ -11,17 +11,17 @@ const POST_COLS: PostKey[] = [
   "content",
   "tags",
   "isPublished",
+  "createTime",
 ];
 
 const PostRepository = {
   getPosts: async () => {
-    // TODO
     const data = await asyncFetchSingleSheetData("posts");
-    console.log(data);
+    // console.log(data);
     const posts = data.values.map((rowVal: string[]) =>
       SheetDataHelper.toValueObject(rowVal, POST_COLS)
     );
-    log("posts", posts);
+    // log("posts", posts);
     return posts;
   },
 

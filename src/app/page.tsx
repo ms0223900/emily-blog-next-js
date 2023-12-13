@@ -2,20 +2,7 @@ import HomeHomepageRepository from "@/repos/homepage/HomepageRepository";
 import Link from "next/link";
 
 async function getData() {
-  // TODO, fetch api error handling?
-
-  // below just for sample api calling
-  // const res = await TodoRepository.getAll();
-  // const postListData = res.map((todo) => ({
-  //   id: todo.id.toString(),
-  // }));
-
-  // console.log("res", res);
   const homepageData = await HomeHomepageRepository.getData();
-
-  // const postListData = [1, 2, 3].map((id) => ({
-  //   id: String(id),
-  // }));
 
   return homepageData;
 }
@@ -35,6 +22,7 @@ export default async function Home() {
             <h2>{post.title}</h2>
             <hr />
             <p>{post.description}</p>
+            <span className={"text-gray-400"}>{post.createTime}</span>
           </Link>
         ))}
       </div>

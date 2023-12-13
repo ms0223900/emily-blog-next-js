@@ -5,4 +5,5 @@ export interface Post {
   content: string;
   tags: string;
   isPublished: boolean;
+  createTime: string;
 }

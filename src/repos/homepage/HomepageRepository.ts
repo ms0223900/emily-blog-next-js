@@ -26,10 +26,21 @@ const HomeHomepageRepository = {
       }
     ) as Post[]; // TODO, use real type
 
+    res.sort((prev, next) => {
+      const prevTime = prev.createTime
+        ? new Date(prev.createTime).getTime()
+        : 1;
+      const nextTime = next.createTime
+        ? new Date(next.createTime).getTime()
+        : 1;
+      const res = nextTime - prevTime;
+      return res;
+    });
+    log("res", res);
+
     const homepageFinalData = {
       posts: res,
     };
-    // log("res", res);
 
     return homepageFinalData;
   },
