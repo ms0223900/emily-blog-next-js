@@ -24,7 +24,7 @@ const HomeHomepageRepository = {
         key: "id",
         data: posts,
       }
-    ) as Post[]; // TODO, use real type
+    ) as Post[];
 
     res.sort((prev, next) => {
       const prevTime = prev.createTime

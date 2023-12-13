@@ -1,11 +1,11 @@
 const SheetDataHelper = {
-  toValueObject: (
-    values: string[],
-    columnKeys: string[]
-  ): Record<string, any> => {
-    const res = {} as Record<string, any>;
+  toValueObject: <Data extends Record<string, any>>(
+    values: any[],
+    columnKeys: (keyof Data)[]
+  ): Data => {
+    const res = {} as Data;
     for (let i = 0; i < columnKeys.length; i++) {
-      const col = columnKeys[i];
+      const col = columnKeys[i] as keyof Data;
       res[col] = values[i];
     }
     return res;
