@@ -36,7 +36,7 @@ const HomeHomepageRepository = {
       const res = nextTime - prevTime;
       return res;
     });
-    log("res", res);
+    // log("res", res);
 
     const homepageFinalData = {
       posts: res,
