@@ -1,8 +1,6 @@
 import { asyncFetchSingleSheetData } from "@/mapper";
-import { log } from "console";
 import { Post } from "./types";
 import SheetDataHelper from "../utils/SheetDataHelper";
-import { SinglePost } from "@/app/posts/page";
 
 type PostKey = keyof Post;
 const POST_COLS: PostKey[] = [
@@ -22,7 +20,6 @@ const PostRepository = {
     const posts = data.values.map((rowVal: string[]) =>
       SheetDataHelper.toValueObject(rowVal, POST_COLS)
     ) as Post[];
-    // log("posts", posts);
     return posts;
   },
 
