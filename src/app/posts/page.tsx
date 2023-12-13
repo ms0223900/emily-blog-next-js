@@ -3,7 +3,7 @@ import Link from "next/link";
 import React, { memo } from "react";
 
 export interface SinglePost {
-  id: number;
+  id: string;
   title: string;
 }
 

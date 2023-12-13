@@ -19,10 +19,9 @@ const PostWithId: React.FC<{ params: { id: string } }> = async ({
 
 export async function generateStaticParams(): Promise<{ id: string }[]> {
   const posts = await PostRepository.getPosts();
-  log("postssss", posts);
 
   return posts.map(({ id }) => ({
-    id: String(id),
+    id,
   }));
 }
 

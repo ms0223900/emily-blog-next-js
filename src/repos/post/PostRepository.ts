@@ -2,7 +2,7 @@ import { asyncFetchSingleSheetData } from "@/mapper";
 import { log } from "console";
 import { Post } from "./types";
 import SheetDataHelper from "../utils/SheetDataHelper";
-import { SinglePost } from "@/app/post/page";
+import { SinglePost } from "@/app/posts/page";
 
 type PostKey = keyof Post;
 const POST_COLS: PostKey[] = [
