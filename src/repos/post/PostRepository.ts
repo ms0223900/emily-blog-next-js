@@ -1,6 +1,7 @@
 import { asyncFetchSingleSheetData } from "@/mapper";
 import { Post } from "./types";
 import SheetDataHelper from "../utils/SheetDataHelper";
+import { SheetListData } from "./SheetListData";
 
 type PostKey = keyof Post;
 const POST_COLS: PostKey[] = [
@@ -16,10 +17,13 @@ const POST_COLS: PostKey[] = [
 const PostRepository = {
   getPosts: async () => {
     const data = await asyncFetchSingleSheetData("posts");
-    // console.log(data);
-    const posts = data.values.map((rowVal: string[]) =>
-      SheetDataHelper.toValueObject(rowVal, POST_COLS)
-    ) as Post[];
+    const posts = SheetListData.toVOList<Post>(data.values, POST_COLS)
+      .filter((post) => post.isPublished === "TRUE")
+      .sortBy(({ createTime }) =>
+        createTime ? new Date(createTime).getTime() : 1
+      )
+      .toList();
+
     return posts;
   },
 
@@ -30,8 +34,11 @@ const PostRepository = {
       (rowVal: string[]) => rowVal[0] === String(id)
     ) as string[] | undefined;
     if (!postRow) throw new Error(`POST_${id}_NOT_FOUND!`);
+    const res = SheetDataHelper.toValueObject(postRow, POST_COLS);
 
-    return SheetDataHelper.toValueObject(postRow, POST_COLS);
+    if (!res.isPublished) throw new Error(`POST_NOT_AVAILABLE`);
+
+    return res;
   },
 };
 

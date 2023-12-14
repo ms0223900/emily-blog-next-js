@@ -4,6 +4,6 @@ export interface Post {
   description: string;
   content: string;
   tags: string;
-  isPublished: boolean;
+  isPublished: "TRUE" | "FALSE";
   createTime: string;
 }
