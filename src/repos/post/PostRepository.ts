@@ -8,6 +8,7 @@ const POST_COLS: PostKey[] = [
   "id",
   "title",
   "description",
+  "thumbnail",
   "content",
   "tags",
   "isPublished",
