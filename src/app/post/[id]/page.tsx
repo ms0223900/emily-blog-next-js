@@ -16,10 +16,7 @@ export const PostWithIdItem: React.FC<{
 const PostWithId: React.FC<{ params: { id: string } }> = async ({
   params: { id },
 }) => {
-  console.log("param", id);
-
   const postData = await PostRepository.getPostById(id);
-  console.log("postData", postData);
 
   return <PostWithIdItem post={postData} />;
 };
