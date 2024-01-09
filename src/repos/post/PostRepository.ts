@@ -2,15 +2,19 @@ import { asyncFetchSingleSheetData } from "@/mapper";
 import { Post } from "./types";
 import SheetDataHelper from "../utils/SheetDataHelper";
 import { SheetListData } from "./SheetListData";
+import { log } from "console";
 
 type PostKey = keyof Post;
-const POST_COLS: PostKey[] = [
+const POST_COLS: (PostKey | "tag1" | "tag2" | "tag3")[] = [
   "id",
   "title",
   "description",
   "thumbnail",
   "content",
   "tags",
+  "tag1",
+  "tag2",
+  "tag3",
   "isPublished",
   "createTime",
 ];
@@ -18,12 +22,13 @@ const POST_COLS: PostKey[] = [
 const PostRepository = {
   getPosts: async () => {
     const data = await asyncFetchSingleSheetData("posts");
-    const posts = SheetListData.toVOList<Post>(data.values, POST_COLS)
+    const posts = SheetListData.toVOList<Post>(data.values, POST_COLS as any[])
       .filter((post) => post.isPublished === "TRUE")
       .sortBy(({ createTime }) =>
         createTime ? new Date(createTime).getTime() : 1
       )
       .toList();
+    log("post", posts);
 
     return posts;
   },
