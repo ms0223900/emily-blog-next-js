@@ -1,19 +1,27 @@
 import PostRepository from "@/repos/post/PostRepository";
+import { Post } from "@/repos/post/types";
 import React, { memo } from "react";
+
+export const PostWithIdItem: React.FC<{
+  post: Pick<Post, "id" | "title" | "description" | "content">;
+}> = ({ post: { id, title, description, content } }) => (
+  <div>
+    <h1 className="text-2xl">{`Id: ${id} -- ${title}`}</h1>
+    <h2 className="text-xl">{description}</h2>
+    <hr />
+    <p className="whitespace-pre-wrap">{content}</p>
+  </div>
+);
 
 const PostWithId: React.FC<{ params: { id: string } }> = async ({
   params: { id },
 }) => {
-  const postData = await PostRepository.getPostById(id);
+  console.log("param", id);
 
-  return (
-    <div>
-      <h1 className="text-2xl">{`Id: ${id} -- ${postData.title}`}</h1>
-      <h2 className="text-xl">{postData.description}</h2>
-      <hr />
-      <p className="whitespace-pre-wrap">{postData.content}</p>
-    </div>
-  );
+  const postData = await PostRepository.getPostById(id);
+  console.log("postData", postData);
+
+  return <PostWithIdItem post={postData} />;
 };
 
 export async function generateStaticParams(): Promise<{ id: string }[]> {
