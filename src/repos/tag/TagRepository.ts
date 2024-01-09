@@ -23,14 +23,16 @@ const TagRepo = {
     const tagGroups = SheetListData.toVOList<TagGroupFromAPI>(
       data.values,
       TAG_GROUP_COLS
-    ).toList();
+    )
+      .filter((tagGroup) => !!tagGroup.tagGroupName)
+      .toList();
 
-    const resMap: Record<SingleTagGroup["id"], SingleTagGroup> = {};
+    const resMap: Record<SingleTagGroup["title"], SingleTagGroup> = {};
 
     for (let i = 0; i < tagGroups.length; i++) {
       const tagGroup = tagGroups[i];
-      if (!resMap[tagGroup.id]) {
-        resMap[tagGroup.id] = {
+      if (!resMap[tagGroup.tagGroupName]) {
+        resMap[tagGroup.tagGroupName] = {
           id: tagGroup.id,
           title: tagGroup.tagGroupName,
           tags: [
@@ -40,20 +42,20 @@ const TagRepo = {
             },
           ],
         };
+      } else {
+        resMap[tagGroup.tagGroupName].tags.push({
+          id: tagGroup.tagId,
+          title: tagGroup.tagName,
+        });
       }
-
-      resMap[tagGroup.id].tags.push({
-        id: tagGroup.tagId,
-        title: tagGroup.tagName,
-      });
     }
 
     const res = Object.keys(resMap).map(
-      (id) =>
+      (title) =>
         ({
-          id,
-          title: resMap[id].title,
-          tags: resMap[id].tags,
+          id: title,
+          title: resMap[title].title,
+          tags: resMap[title].tags,
         } as SingleTagGroup)
     );
 
