@@ -1,4 +1,4 @@
-import Page, { PostWithIdItem } from "@/app/post/[id]/page";
+import { PostWithIdItem } from "@/app/post/[id]/PostWithIdItem";
 import { render, screen } from "@testing-library/react";
 
 const mockFn = jest.fn();
