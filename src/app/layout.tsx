@@ -29,7 +29,7 @@ export default async function RootLayout({
               <ul>
                 {tagGroup.tags.map((tag, i) => (
                   <li key={`tag-${tag.title}-${i}`}>
-                    <Link href={"/"}>{tag.title}</Link>
+                    <Link href={`/tag/${tag.title}`}>{tag.title}</Link>
                   </li>
                 ))}
               </ul>

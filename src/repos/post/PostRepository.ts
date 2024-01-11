@@ -54,7 +54,13 @@ const PostRepository = {
   getPostsByTag: async (tagName: string) => {
     const posts = await PostRepository.getPosts();
 
-    return posts.filter((post) => post.tags.includes(tagName));
+    return posts.filter((post) => {
+      const res = (post.tags as unknown as string[]).includes(
+        decodeURI(tagName)
+      );
+
+      return res;
+    });
   },
 };
 
