@@ -27,6 +27,10 @@ const PostRepository = {
       .sortBy(({ createTime }) =>
         createTime ? new Date(createTime).getTime() : 1
       )
+      .map((post) => ({
+        ...post,
+        tags: post.tags.split(", "),
+      }))
       .toList();
     log("post", posts);
 
@@ -45,6 +49,12 @@ const PostRepository = {
     if (!res.isPublished) throw new Error(`POST_NOT_AVAILABLE`);
 
     return res;
+  },
+
+  getPostsByTag: async (tagName: string) => {
+    const posts = await PostRepository.getPosts();
+
+    return posts.filter((post) => post.tags.includes(tagName));
   },
 };
 
