@@ -46,6 +46,11 @@ export class SheetListData<Data extends Record<any, any>> {
     return this;
   }
 
+  map(mapFn: (data: Data, i?: number) => any) {
+    this.data = this.data.map(mapFn);
+    return this;
+  }
+
   filter(filterFn: Parameters<Array<Data>["filter"]>[0]) {
     this.data = this.data.filter(filterFn);
     return this;
