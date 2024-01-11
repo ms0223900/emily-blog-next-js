@@ -29,6 +29,7 @@ const TagRepo = {
 
     const resMap: Record<SingleTagGroup["title"], SingleTagGroup> = {};
 
+    // TODO, refactor
     for (let i = 0; i < tagGroups.length; i++) {
       const tagGroup = tagGroups[i];
       if (!resMap[tagGroup.tagGroupName]) {
