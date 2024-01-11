@@ -6,7 +6,7 @@ import React, { memo } from "react";
 const PostsByTag: React.FC<{ params: { tagName: string } }> = async ({
   params: { tagName: tagName },
 }) => {
-  const posts = await PostRepository.getPostsByTag(tagName);
+  const posts = await PostRepository.getPostsByTag(decodeURI(tagName));
 
   return (
     <div>

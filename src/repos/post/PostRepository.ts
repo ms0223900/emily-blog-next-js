@@ -32,32 +32,29 @@ const PostRepository = {
         tags: post.tags.split(", "),
       }))
       .toList();
-    log("post", posts);
+    log("posts", posts);
 
     return posts;
   },
 
   getPostById: async (id: number | string) => {
-    const data = await asyncFetchSingleSheetData("posts");
+    const data = await PostRepository.getPosts();
 
-    const postRow = data.values.find(
-      (rowVal: string[]) => rowVal[0] === String(id)
-    ) as string[] | undefined;
-    if (!postRow) throw new Error(`POST_${id}_NOT_FOUND!`);
-    const res = SheetDataHelper.toValueObject(postRow, POST_COLS);
+    const foundPost = data.find((post) => String(post.id) === String(id));
+    if (!foundPost) throw new Error(`POST_${id}_NOT_FOUND!`);
 
-    if (!res.isPublished) throw new Error(`POST_NOT_AVAILABLE`);
-
-    return res;
+    return foundPost;
   },
 
   getPostsByTag: async (tagName: string) => {
     const posts = await PostRepository.getPosts();
+    console.log("tagName: ", tagName);
 
     return posts.filter((post) => {
       const res = (post.tags as unknown as string[]).includes(
         decodeURI(tagName)
       );
+      console.log("res: ", res);
 
       return res;
     });
