@@ -1,20 +1,12 @@
 'use client'
 
 import React from 'react';
-import Link from "next/link";
+import { Tag } from "@/components/homepage/Tag";
 
 export interface BannerProps {
     title: string;
     intro: string;
 
-}
-
-function Tag({tag}: { tag: string }) {
-    return (
-        <Link href={`/tag/${tag}`}>
-            {tag}
-        </Link>
-    );
 }
 
 const Banner: React.FC<BannerProps> = (props) => {
