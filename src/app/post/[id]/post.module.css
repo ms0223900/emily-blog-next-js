@@ -1,0 +1,10 @@
+.markdown ul,
+.markdown ol {
+    list-style: initial;
+    padding: revert;
+    margin: auto;
+}
+
+.markdown a {
+    text-decoration: underline;
+}
