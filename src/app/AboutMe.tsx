@@ -1,17 +1,23 @@
 export function AboutMe() {
     return (
         <div>
-            <h3>
-                Hi :)
-                {/*// TODO*/}
-            </h3>
-            <p>
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-                industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
-                scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap
-                into electronic typesetting, remaining essentially unch
-                {/*// TODO*/}
-            </p>
+            <h2>
+                關於自然捲
+            </h2>
+            <div className={'flex flex-col items-center m-auto w-60'}>
+                <div className={'bg-amber-100 rounded-full w-full pt-[100%]'}>
+                    <img src={''} />
+                </div>
+                <h3 className={'py-4 font-bold text-xl'}>
+                    自然捲
+                </h3>
+                <p>
+                    捲捲毛の部落格｜
+                    捲捲毛の部落格｜
+                    捲捲毛の部落格｜
+                    捲捲毛の部落格｜
+                </p>
+            </div>
         </div>
     );
 }
