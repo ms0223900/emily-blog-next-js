@@ -12,12 +12,13 @@ export interface CardItemProps {
 
 const CardItem: React.FC<CardItemProps> = (props) => {
     return (
-        <li className={"flex flex-col items-start gap-2 p-6 pt-0 bg-white text-black border rounded-xl"}><Link
+        <li className={""}><Link
+            className={"flex flex-col items-start gap-2 p-6 pt-0 bg-white text-black border rounded-xl"}
             href={`/post/${props.id}`}>
-            <img className={"block w-full h-auto rounded-xl"} src={props.thumbnailImg} alt={"thumbnailImg"}/>
-            <Tag tag={props.tag}/>
+            <img className={"block w-full h-auto rounded-xl"} src={props.thumbnailImg} alt={"thumbnailImg"} />
+            <Tag tag={props.tag} />
             <h3 className={'text-3xl'}>{props.title}</h3>
-            <p>{props.intro}</p>
+            <p className={'w-full line-clamp-4'}>{props.intro}</p>
         </Link></li>
     );
 };
