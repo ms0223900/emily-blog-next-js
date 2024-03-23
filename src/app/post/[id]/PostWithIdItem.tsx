@@ -25,7 +25,7 @@ export const PostWithIdItem: React.FC<{
                     <Markdown className={styles.markdown}
                               remarkPlugins={[remarkGfm, remarkHeadingId]}
                               components={{
-                                  a: ({ node, children, ...props }) =>
+                                  a: ({ children, ...props }) =>
                                       <a {...props} target={'_blank'}>{children}</a>
                               }}
                     >
