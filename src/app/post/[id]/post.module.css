@@ -24,6 +24,15 @@
     line-height: 28px;
 }
 
+.markdown pre {
+    background-color: #ddd;
+    padding: 1rem;
+}
+
+.markdown code {
+    font-size: 12px;
+}
+
 @media screen and (min-width: 768px) {
     .markdown {
         font-size: 20px;
