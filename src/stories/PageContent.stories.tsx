@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { PostWithIdItem } from "../app/post/[id]/PostWithIdItem";
+import '@/app/globals.css'
 
 const meta = {
     title: 'PageContent',
