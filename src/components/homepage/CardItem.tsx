@@ -19,7 +19,7 @@ const CardItem: React.FC<CardItemProps> = (props) => {
                 href={getPostLink(props.id)}>
                 <img className={"block w-full h-auto rounded-xl"} src={props.thumbnailImg} alt={"thumbnailImg"} />
                 <Tag tag={props.tag} />
-                <h3 className={'text-3xl'}>{props.title}</h3>
+                <h3 className={'text-2xl line-clamp-2 leading-normal'}>{props.title}</h3>
                 <p className={'w-full line-clamp-4'}>{props.intro}</p>
             </Link></li>
     );

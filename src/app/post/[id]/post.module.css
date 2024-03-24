@@ -27,7 +27,7 @@
 .markdown h2,
 .markdown h3 {
     padding-bottom: 0.25rem;
-    font-weight: bold;
+    /*font-weight: bold;*/
     line-height: 2;
 }
 
