@@ -13,19 +13,22 @@ async function getData() {
 export default async function Home() {
     const homepageData = await getData();
 
+    const firstPost = homepageData.posts[0];
     return (
         <main
             className="flex min-h-screen flex-col items-center justify-between p-2 md:p-8 lg:p-24 bg-white text-black">
             <div className={"grid grid-cols-4 gap-10"}>
                 <section className={"col-span-4 md:col-span-3"}>
-                    <Banner title={"【荷蘭阿姆斯特丹】鬱金香公園-根本是天堂8太美了"}
-                            intro={"兩間飯店都各有特色，其中第一間Aziza Paradise飯店比較靠近市區交通方便。而另一間Costa Palawan是靠海邊的度假村，景色超美非常適合好好的度假放鬆！"} />
+                    <Banner title={firstPost?.title}
+                            intro={firstPost?.description}
+                            thumbnail={firstPost?.thumbnail}
+                            id={firstPost?.id} />
 
                     <div className={"max-w-[1252px]"}>
                         <div className={"w-full py-10"}>
                             <h2 className={"text-left text-black font-bold text-2xl"}>Latest Post</h2>
                         </div>
-                        <CardList cardListData={homepageData.posts.map(p => ({
+                        <CardList cardListData={homepageData.posts.slice(1).map(p => ({
                             ...p,
                             thumbnailImg: p.thumbnail,
                             tag: p.tags,
