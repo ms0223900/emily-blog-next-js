@@ -17,9 +17,10 @@ const Banner: React.FC<BannerProps> = (props) => {
             <div className={"bg-amber-400 w-full h-[600px] relative rounded-lg overflow-hidden"}>
                 <img className={"w-full block h-auto"} alt={"banner-bg"}
                      src={props.thumbnail} />
-                <div className={"max-w-[633px] p-10 pb-8 bg-white text-black rounded-2xl absolute left-16 bottom-4"}>
+                <div
+                    className={"max-w-[633px] p-10 pb-8 bg-white text-black rounded-2xl absolute left-16 bottom-4 flex flex-col gap-4 items-start"}>
                     <Tag tag={"Travel"} />
-                    <h2 className={"text-3xl pb-4 font-bold"}>
+                    <h2 className={"text-3xl font-bold"}>
                         {props.title}
                     </h2>
                     <p className={"text-lg font-light"}>

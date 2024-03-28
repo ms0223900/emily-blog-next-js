@@ -6,7 +6,7 @@ export function Tag({ tag }: { tag: string }) {
     //TODO
     const href = '/'
     return (
-        <Link className={'text-blue-300 p-2 bg-blue-50 rounded inline-block'} href={href}>
+        <Link className={'text-blue-300 px-2 py-1 bg-blue-50 rounded inline-block'} href={href}>
             {tag}
         </Link>
     );
