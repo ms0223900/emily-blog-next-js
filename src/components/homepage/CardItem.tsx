@@ -15,7 +15,7 @@ const CardItem: React.FC<CardItemProps> = (props) => {
     return (
         <li className={""}>
             <Link
-                className={"flex flex-col items-start gap-2 p-6 pt-0 bg-white text-black border rounded-xl"}
+                className={"flex flex-col items-start gap-2 justify-stretch h-full p-6 pt-0 bg-white text-black border rounded-xl"}
                 href={getPostLink(props.id)}>
                 <img className={"block w-full h-auto rounded-xl"} src={props.thumbnailImg} alt={"thumbnailImg"} />
                 <Tag tag={props.tag} />
