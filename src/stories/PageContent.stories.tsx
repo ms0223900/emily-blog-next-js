@@ -81,6 +81,7 @@ export const PageContent: Story = {
             id: '1',
             title: '【Storybook】Storybook 使用 tsconfig',
             description: '安裝 plugin 或設定 alias',
+            thumbnail: "https://images.unsplash.com/photo-1574882957524-f36e6b0a5ea3?q=70&w=700&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
             content,
             tags: '',
         }
@@ -145,6 +146,7 @@ export const PageContent2: Story = {
             title: '【Storybook】Storybook 使用 tsconfig',
             description: '安裝 plugin 或設定 alias',
             content: content1,
+            thumbnail: "https://images.unsplash.com/photo-1574882957524-f36e6b0a5ea3?q=70&w=700&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
             tags: '',
         }
     }
