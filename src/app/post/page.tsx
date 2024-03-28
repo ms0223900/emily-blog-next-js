@@ -1,41 +1,41 @@
 import PostRepository from "@/repos/post/PostRepository";
-import Link from "next/link";
 import React, { memo } from "react";
+import CardItem from "@/components/homepage/CardItem";
+import { Post } from "@/repos/post/types";
 
-export interface SinglePost {
-  id: string;
-  title: string;
+export interface SinglePost extends Post {
+    id: string;
+    title: string;
 }
 
 export interface PostsProps {
-  postList: SinglePost[];
+    postList: SinglePost[];
 }
 
 const Posts = async () => {
-  const postList = (await fetchPosts()).postList;
+    const postList = (await fetchPosts()).postList;
 
-  return (
-    <div className="p-10">
-      <h1 className={`text-xl`}>All Posts Here :)</h1>
-      {postList.map((post) => (
-        <Link
-          key={post.id}
-          className="block p-4 bg-white m-2 hover:bg-gray-50"
-          href={`/post/${post.id}`}
-        >
-          {post.title}
-        </Link>
-      ))}
-    </div>
-  );
+    return (
+        <div className="p-2 max-w-[1200px] m-auto">
+            <h1 className={`text-xl`}>All Posts Here :)</h1>
+            <ul className={"grid grid-cols-2 md:grid-cols-4 gap-4"}>
+                {postList.map((post) => (
+                    <CardItem key={post.id}
+                              thumbnailImg={post.thumbnail}
+                              tag={post.tags}
+                              intro={post.description} {...post} />
+                ))}
+            </ul>
+        </div>
+    );
 };
 
 async function fetchPosts(): Promise<PostsProps> {
-  const posts = await PostRepository.getPosts();
+    const posts = await PostRepository.getPosts();
 
-  return {
-    postList: posts,
-  };
+    return {
+        postList: posts,
+    };
 }
 
 export default memo(Posts);

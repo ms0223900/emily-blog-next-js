@@ -40,7 +40,9 @@ export default async function RootLayout({
             </div>
             <SearchInputBar />
         </nav>
-        {children}
+        <main>
+            {children}
+        </main>
         </body>
         </html>
     );
