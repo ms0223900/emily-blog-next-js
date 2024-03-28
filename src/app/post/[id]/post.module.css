@@ -4,6 +4,7 @@
     list-style: initial;
     padding: revert;
     margin: auto;
+    padding-bottom: 1rem;
 }
 
 .markdown li {
@@ -26,13 +27,17 @@
 .markdown h1,
 .markdown h2,
 .markdown h3 {
-    padding-bottom: 0.25rem;
+    padding-bottom: 0.5rem;
     /*font-weight: bold;*/
     line-height: 2;
 }
 
 .markdown p {
     line-height: 1.6;
+}
+
+.markdown p:has(>img) {
+    padding: 1rem 0;
 }
 
 .markdown pre {
