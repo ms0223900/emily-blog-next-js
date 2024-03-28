@@ -4,6 +4,7 @@ import CardList from "@/components/homepage/CardList";
 import { LatestPostList } from "@/app/LatestPostList";
 import { AboutMe } from "@/app/AboutMe";
 import Head from "next/head";
+import Link from "next/link";
 
 async function getData() {
     const homepageData = await HomeHomepageRepository.getData();
@@ -29,8 +30,11 @@ export default async function Home() {
                             id={firstPost?.id} />
 
                     <div className={"max-w-[1252px]"}>
-                        <div className={"w-full py-10"}>
-                            <h2 className={"text-left text-black font-bold text-2xl"}>Latest Post</h2>
+                        <div className={"flex justify-between w-full py-10"}>
+                            <h2 className={"text-left text-black font-bold text-2xl"}>Latest Posts</h2>
+                            <Link className={"text-blue-400 font-bold"} href={`/posts`}>
+                                {`more >>`}
+                            </Link>
                         </div>
                         <CardList cardListData={homepageData.posts.slice(1).map(p => ({
                             ...p,

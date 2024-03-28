@@ -8,7 +8,7 @@ export interface CardListProps {
 
 const CardList: React.FC<CardListProps> = (props) => {
     return (
-        <ul className={'grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2'}>
+        <ul className={'grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4'}>
             {props.cardListData.map((card, i) => (
                 <CardItem key={i} {...card} />))
             }
