@@ -3,6 +3,7 @@ import Banner from "@/components/homepage/Banner";
 import CardList from "@/components/homepage/CardList";
 import { LatestPostList } from "@/app/LatestPostList";
 import { AboutMe } from "@/app/AboutMe";
+import Head from "next/head";
 
 async function getData() {
     const homepageData = await HomeHomepageRepository.getData();
@@ -17,6 +18,9 @@ export default async function Home() {
     return (
         <main
             className="flex min-h-screen flex-col items-center justify-between p-2 md:p-8 lg:p-24 bg-white text-black">
+            <Head>
+                <title>Emily's Blog</title>
+            </Head>
             <div className={"grid grid-cols-4 gap-10"}>
                 <section className={"col-span-4 md:col-span-3"}>
                     <Banner title={firstPost?.title}

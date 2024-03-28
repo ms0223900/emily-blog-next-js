@@ -1,7 +1,6 @@
 import PostRepository from "@/repos/post/PostRepository";
 import React, { memo } from "react";
 import { PostWithIdItem } from "./PostWithIdItem";
-import Head from "next/head";
 
 export const generateMetadata = async ({
                                            params: { id }
@@ -9,7 +8,7 @@ export const generateMetadata = async ({
     const postData = await PostRepository.getPostById(id);
 
     return ({
-        title: postData.title,
+        title: `${postData.title} | Emily's Blog`,
     })
 };
 
@@ -20,9 +19,6 @@ const PostWithId: React.FC<{ params: { id: string } }> = async ({
     const postData = await PostRepository.getPostById(id);
 
     return <div>
-        <Head>
-            <title>{postData.title}</title>
-        </Head>
         <PostWithIdItem post={postData} />
     </div>
 };
