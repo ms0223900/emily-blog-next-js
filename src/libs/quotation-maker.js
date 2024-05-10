@@ -11,6 +11,17 @@ const PRODUCT_DETAIL = {
     singlePrice: 'singlePrice',
 };
 
+const PRODUCT_START_ROW = 16;
+
+function getProductDetails(productSeq, colName) {
+    const PRODUCT_START_COL = 1;
+    return inputsSheet.getRange(PRODUCT_START_ROW + productDetailIdxMap[colName], PRODUCT_START_COL + productSeq).getValue();
+}
+
+function getProduct2Details(colName) {
+    return getProductDetails(2, colName);
+}
+
 function getInputSheet() {
     const ss = SpreadsheetApp.getActiveSpreadsheet();
     const inputsSheet = ss.getSheetByName('main');
@@ -50,21 +61,48 @@ class CustomerInfoRepo {
     getWholeCustomInfo() {
         return this.inputsSheet.getRange('B3').getValue();
     }
+
+    get() {
+        const wholeCustomInfo = this.getWholeCustomInfo();
+        if (wholeCustomInfo) {
+            return wholeCustomInfo;
+        }
+        return `1. 公司名稱: ${this.getName()}
+        2. 聯絡人姓名: ${this.getCustomerName()}
+        3. 聯繫電話: ${this.getPhoneNum()}
+        4. E-mail: ${this.getEmail()}
+        5. 抬頭: ${this.getHeading()}
+        6. 統編: ${this.getVatNum()}`;
+    }
 }
 
 function makeCustomerInfo() {
     const inputsSheet = getInputSheet();
 
     const customerInfoRepo = new CustomerInfoRepo(inputsSheet);
-    if (customerInfoRepo.getWholeCustomInfo()) {
-        return customerInfoRepo.getWholeCustomInfo();
-    }
-    return `1. 公司名稱: ${customerInfoRepo.getName()}
-2. 聯絡人姓名: ${customerInfoRepo.getCustomerName()}
-3. 聯繫電話: ${customerInfoRepo.getPhoneNum()}
-4. E-mail: ${customerInfoRepo.getEmail()}
-5. 抬頭: ${customerInfoRepo.getHeading()}
-6. 統編: ${customerInfoRepo.getVatNum()}`
+    return customerInfoRepo.get();
+}
+
+function setProductValues(newQuotationSheet, productSeq = 1) {
+    const productName = getProductDetails(productSeq, PRODUCT_DETAIL.name);
+    if (!productName) return
+
+    // TODO, dynamic get range
+    const productNameRange = newQuotationSheet.getRange('A6:A7');
+    productNameRange.setValue(productName);
+
+    const productSpecRange = newQuotationSheet.getRange('B6:B7');
+    productSpecRange.setValue(getProductDetails(productSeq, PRODUCT_DETAIL.spec));
+    productSpecRange.merge();
+
+    const productPriceRange = newQuotationSheet.getRange('D6:E7');
+    productPriceRange.setValue(getProductDetails(productSeq, PRODUCT_DETAIL.singlePrice));
+
+    const productAmountRange = newQuotationSheet.getRange('C6:C7');
+    productAmountRange.setValue(getProductDetails(productSeq, PRODUCT_DETAIL.amount));
+
+    const totalPriceRange = newQuotationSheet.getRange('F6:F7');
+    totalPriceRange.setFormula('=C6*D6');
 }
 
 function main() {
@@ -82,26 +120,7 @@ function main() {
     const dateRange = newQuotationSheet.getRange('A4:F4');
     dateRange.setValue('7. 報價日期: ' + new Date().toLocaleDateString('zh-TW'));
 
-    const productNameRange = newQuotationSheet.getRange('A6:A7');
-
-    function getProduct1Details(colName) {
-        return getProductDetails(16, colName);
-    }
-
-    productNameRange.setValue(getProduct1Details(PRODUCT_DETAIL.name));
-
-    const productSpecRange = newQuotationSheet.getRange('B6:B7');
-    productSpecRange.setValue(getProduct1Details(PRODUCT_DETAIL.spec));
-    productSpecRange.merge();
-
-    const productPriceRange = newQuotationSheet.getRange('D6:E7');
-    productPriceRange.setValue(getProduct1Details(PRODUCT_DETAIL.singlePrice));
-
-    const productAmountRange = newQuotationSheet.getRange('C6:C7');
-    productAmountRange.setValue(getProduct1Details(PRODUCT_DETAIL.amount));
-
-    const totalPriceRange = newQuotationSheet.getRange('F6:F7');
-    totalPriceRange.setFormula('=C6*D6');
+    setProductValues(newQuotationSheet, 1);
 
     // product 2
     const product2Name = getProduct2Details(PRODUCT_DETAIL.name);
@@ -111,14 +130,6 @@ function main() {
 
     const product2Range = newQuotationSheet.getRange('A8:A9');
     product2Range.merge();
-
-    function getProduct2Details(colName) {
-        return getProductDetails(20, colName);
-    }
-
-    function getProductDetails(startRow, colName) {
-        return inputsSheet.getRange(startRow + productDetailIdxMap[colName], 2).getValue();
-    }
 
     const PRODUCT_2_START_ROW = 8;
     const name2Range = newQuotationSheet.getRange(PRODUCT_2_START_ROW, 1);
