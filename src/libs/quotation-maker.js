@@ -105,29 +105,7 @@ function setProductValues(newQuotationSheet, productSeq = 1) {
     totalPriceRange.setFormula('=C6*D6');
 }
 
-function main() {
-    const ss = SpreadsheetApp.getActiveSpreadsheet();
-
-    const newQuotationSheetName = 'temp:)' + Math.random().toString().slice(0, 5);
-    copyTemplateSheet(newQuotationSheetName);
-
-    const inputsSheet = ss.getSheetByName('main');
-    const newQuotationSheet = ss.getSheetByName(newQuotationSheetName);
-
-    const customerInfoRange = newQuotationSheet.getRange('A3:F3');
-    customerInfoRange.setValue(makeCustomerInfo());
-
-    const dateRange = newQuotationSheet.getRange('A4:F4');
-    dateRange.setValue('7. 報價日期: ' + new Date().toLocaleDateString('zh-TW'));
-
-    setProductValues(newQuotationSheet, 1);
-
-    // product 2
-    const product2Name = getProduct2Details(PRODUCT_DETAIL.name);
-    if (!product2Name) return;
-
-    newQuotationSheet.insertRowsAfter(7, 2);
-
+function setProduct2Values(newQuotationSheet) {
     const product2Range = newQuotationSheet.getRange('A8:A9');
     product2Range.merge();
 
@@ -145,6 +123,30 @@ function main() {
     const product2SinglePriceRange = newQuotationSheet.getRange(PRODUCT_2_START_ROW, 4, 2, 2);
     product2SinglePriceRange.setValue(getProduct2Details(PRODUCT_DETAIL.singlePrice));
     product2SinglePriceRange.merge();
+}
+
+function main() {
+    const ss = SpreadsheetApp.getActiveSpreadsheet();
+
+    const newQuotationSheetName = 'temp:)' + Math.random().toString().slice(0, 5);
+    copyTemplateSheet(newQuotationSheetName);
+
+    const newQuotationSheet = ss.getSheetByName(newQuotationSheetName);
+
+    const customerInfoRange = newQuotationSheet.getRange('A3:F3');
+    customerInfoRange.setValue(makeCustomerInfo());
+
+    const dateRange = newQuotationSheet.getRange('A4:F4');
+    dateRange.setValue('7. 報價日期: ' + new Date().toLocaleDateString('zh-TW'));
+
+    setProductValues(newQuotationSheet, 1);
+
+    // product 2
+    const product2Name = getProduct2Details(PRODUCT_DETAIL.name);
+    if (!product2Name) return;
+
+    newQuotationSheet.insertRowsAfter(7, 2);
+    setProduct2Values(newQuotationSheet);
 }
 
 function getTemplateSheet() {
