@@ -15,7 +15,7 @@ const PRODUCT_START_ROW = 16;
 
 function getProductDetails(productSeq, colName) {
     const PRODUCT_START_COL = 1;
-    return inputsSheet.getRange(PRODUCT_START_ROW + productDetailIdxMap[colName], PRODUCT_START_COL + productSeq).getValue();
+    return getInputSheet().getRange(PRODUCT_START_ROW + productDetailIdxMap[colName], PRODUCT_START_COL + productSeq).getValue();
 }
 
 function getProduct2Details(colName) {
@@ -125,13 +125,19 @@ function setProduct2Values(newQuotationSheet) {
     product2SinglePriceRange.merge();
 }
 
+function makeQuotationSheetName() {
+    return 'temp:)' + Math.random().toString().slice(0, 5);
+}
+
 function main() {
     const ss = SpreadsheetApp.getActiveSpreadsheet();
+    const newQuotationSheetName = makeQuotationSheetName();
+    const newSS = SpreadsheetApp.create(newQuotationSheetName);
+    const newTabName = 'v1';
+    copyTemplateSheet(newSS, newTabName)
+    const newSheet = newSS.getSheetByName(newTabName);
 
-    const newQuotationSheetName = 'temp:)' + Math.random().toString().slice(0, 5);
-    copyTemplateSheet(newQuotationSheetName);
-
-    const newQuotationSheet = ss.getSheetByName(newQuotationSheetName);
+    const newQuotationSheet = newSheet;
 
     const customerInfoRange = newQuotationSheet.getRange('A3:F3');
     customerInfoRange.setValue(makeCustomerInfo());
@@ -147,6 +153,8 @@ function main() {
 
     newQuotationSheet.insertRowsAfter(7, 2);
     setProduct2Values(newQuotationSheet);
+
+    console.log(newSS.getUrl());
 }
 
 function getTemplateSheet() {
@@ -155,7 +163,6 @@ function getTemplateSheet() {
     return templateSheet;
 }
 
-function copyTemplateSheet(newName = '') {
-    const ss = SpreadsheetApp.getActiveSpreadsheet();
-    return getTemplateSheet().copyTo(ss).setName(newName);
+function copyTemplateSheet(activeSpreadsheet = SpreadsheetApp.getActiveSpreadsheet(), newName = '') {
+    return getTemplateSheet().copyTo(activeSpreadsheet).setName(newName);
 }
