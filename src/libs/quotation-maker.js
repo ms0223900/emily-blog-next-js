@@ -51,6 +51,10 @@ class CustomerInfoRepo {
     }
 
     getHeading() {
+        const wholeCustomInfo = this.getWholeCustomInfo();
+        if (wholeCustomInfo) {
+            return wholeCustomInfo.split('\n')[5].split(/：|:\s?/)[1];
+        }
         return this.inputsSheet.getRange('B8').getValue();
     }
 
@@ -126,11 +130,12 @@ function setProduct2Values(newQuotationSheet) {
 }
 
 function makeQuotationSheetName() {
-    return 'temp:)' + Math.random().toString().slice(0, 5);
+    const firstProductName = getProductDetails(1, PRODUCT_DETAIL.name);
+    const customerTitle = new CustomerInfoRepo(getInputSheet()).getHeading()
+    return `${firstProductName}-報價單 for ${customerTitle}`;
 }
 
 function main() {
-    const ss = SpreadsheetApp.getActiveSpreadsheet();
     const newQuotationSheetName = makeQuotationSheetName();
     const newSS = SpreadsheetApp.create(newQuotationSheetName);
     const newTabName = 'v1';
