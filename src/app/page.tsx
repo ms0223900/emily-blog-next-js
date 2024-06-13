@@ -5,11 +5,26 @@ import { LatestPostList } from "@/app/LatestPostList";
 import { AboutMe } from "@/app/AboutMe";
 import Head from "next/head";
 import Link from "next/link";
+import { cn } from "@/styles/helpers";
 
 async function getData() {
     const homepageData = await HomeHomepageRepository.getData();
 
     return homepageData;
+}
+
+function Categories() {
+    return (
+        <div>
+            <h2 className={
+                cn("bg-primary pt-1 text-xl font-bold text-white",
+                    "inline-block"
+                )
+            }>
+                Categories
+            </h2>
+        </div>
+    );
 }
 
 export default async function Home() {
@@ -46,6 +61,7 @@ export default async function Home() {
                 </section>
                 <section className={'col-span-4 md:col-span-1'}>
                     <AboutMe />
+                    <Categories />
                     <LatestPostList />
                 </section>
             </div>
