@@ -120,7 +120,11 @@ export default async function Home() {
                         }))} />
                     </div>
                 </section>
-                <section className={'col-span-4 md:col-span-1'}>
+                <section className={
+                    cn('col-span-4 md:col-span-1',
+                        'flex flex-col gap-20'
+                    )
+                }>
                     <AboutMe />
                     <Categories tagsAmount={tagsAmountList} />
                     <LatestPostList />
