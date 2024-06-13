@@ -6,6 +6,7 @@ import { AboutMe } from "@/app/AboutMe";
 import Head from "next/head";
 import Link from "next/link";
 import { cn } from "@/styles/helpers";
+import React from "react";
 
 async function getData() {
     const homepageData = await HomeHomepageRepository.getData();
@@ -13,7 +14,18 @@ async function getData() {
     return homepageData;
 }
 
-function Categories() {
+interface TagAmount {
+    tag: string
+    amount: number
+}
+
+interface CategoriesProps {
+    tagsAmount: TagAmount[]
+}
+
+const Categories: React.FC<CategoriesProps> = ({
+                                                   tagsAmount
+                                               }) => {
     return (
         <div>
             <h2 className={
@@ -23,9 +35,27 @@ function Categories() {
             }>
                 Categories
             </h2>
+            <div className={'pt-[40px]'}>
+                {tagsAmount.map(tagAmount => (
+                    <Link
+                        key={tagAmount.tag}
+                        href={`/tag/${tagAmount.tag}`}
+                        className={
+                            cn('flex justify-between', 'pb-2')
+                        }
+                    >
+                        <p>
+                            {tagAmount.tag}
+                        </p>
+                        <p>
+                            {tagAmount.amount}
+                        </p>
+                    </Link>
+                ))}
+            </div>
         </div>
     );
-}
+};
 
 function getTagsAmount(postTags: (string & string[])[]): Record<string, number> {
     if (typeof postTags === 'string') {
@@ -48,9 +78,20 @@ export default async function Home() {
     const postTags = homepageData.posts.map(post => post.tags);
 
     const tagsAmount = getTagsAmount(postTags);
-    console.log("tagsAmount: ", tagsAmount);
 
     const firstPost = homepageData.posts[0];
+    let tagsAmountList = (() => {
+        let res: TagAmount[] = []
+        for (let tagsAmountKey in tagsAmount) {
+            const amount = tagsAmount[tagsAmountKey];
+            res.push({
+                tag: tagsAmountKey,
+                amount,
+            })
+        }
+        return res;
+    })();
+
     return (
         <main
             className="flex min-h-screen flex-col items-center justify-between p-2 md:p-8 lg:p-24 bg-white text-black">
@@ -81,7 +122,7 @@ export default async function Home() {
                 </section>
                 <section className={'col-span-4 md:col-span-1'}>
                     <AboutMe />
-                    <Categories />
+                    <Categories tagsAmount={tagsAmountList} />
                     <LatestPostList />
                 </section>
             </div>
