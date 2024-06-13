@@ -27,8 +27,28 @@ function Categories() {
     );
 }
 
+function getTagsAmount(postTags: (string & string[])[]): Record<string, number> {
+    if (typeof postTags === 'string') {
+        return ({});
+    }
+    let res = {} as Record<string, number>;
+    for (let i = 0; i < postTags.length; i++) {
+        const singlePostTags = postTags[i];
+        for (let j = 0; j < singlePostTags.length; j++) {
+            const tag = singlePostTags[j];
+            if (!tag) continue
+            res[tag] = (res[tag] || 0) + 1
+        }
+    }
+    return res;
+}
+
 export default async function Home() {
     const homepageData = await getData();
+    const postTags = homepageData.posts.map(post => post.tags);
+
+    const tagsAmount = getTagsAmount(postTags);
+    console.log("tagsAmount: ", tagsAmount);
 
     const firstPost = homepageData.posts[0];
     return (

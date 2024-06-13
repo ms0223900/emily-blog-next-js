@@ -29,7 +29,7 @@ const PostRepository = {
                 ...post,
                 tags: post.tags.split(", "),
             }))
-            .toList();
+            .toList() as (Post & { tags: string[] })[];
         // log("posts", posts);
 
         return posts;
