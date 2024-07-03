@@ -3,6 +3,8 @@ import { SheetListData } from "@/repos/post/SheetListData";
 
 export interface ShortenUrlMapper {
     getOriginalUrl(id: string): Promise<ShortenUrlDto | null | undefined>;
+
+    getOriginalUrlByHash(hash: string): Promise<ShortenUrlDto | null | undefined>;
 }
 
 interface ShortenUrlDto {
@@ -12,14 +14,25 @@ interface ShortenUrlDto {
 }
 
 export class ShortenUrlMapperGoogleSheetImpl implements ShortenUrlMapper {
+    private cols: (keyof ShortenUrlDto)[] = ["id", "hash", "url"];
+
     async getOriginalUrl(id: string): Promise<ShortenUrlDto | null | undefined> {
         try {
-            const fetched = await asyncFetchSingleSheetData("shorten-url");
-            const sheetListData = SheetListData.toVOList<ShortenUrlDto>(fetched.values, ["id", "hash", "url"]);
+            const sheetListData = await this.getAll();
             return sheetListData.toList().find(dto => dto.id === id);
         } catch (e) {
             console.log("e: ", e);
         }
         return null;
+    }
+
+    getOriginalUrlByHash(hash: string): Promise<ShortenUrlDto | null | undefined> {
+        return Promise.resolve(undefined);
+    }
+
+    private async getAll() {
+        const fetched = await asyncFetchSingleSheetData("shorten-url");
+        const sheetListData = SheetListData.toVOList<ShortenUrlDto>(fetched.values, this.cols);
+        return sheetListData;
     }
 }
