@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { ShortenUrlMapper, ShortenUrlMapperImpl } from "@/app/shorten-url/ShortenUrlMapper";
+import { ShortenUrlMapper, ShortenUrlMapperGoogleSheetImpl } from "@/app/shorten-url/ShortenUrlMapper";
 
 // export const dynamic = "force-dynamic";
 
@@ -19,8 +19,8 @@ class ShortenUrlRepo {
         this.shortenUrlMapper = shortenUrlMapper;
     }
 
-    getOriginalUrlById(id: string) {
-        this.shortenUrlMapper.getOriginalUrl(id)
+    async getOriginalUrlByHash(id: string) {
+        await this.shortenUrlMapper.getOriginalUrl(id)
         return id + "aaa";
     }
 }
@@ -32,8 +32,8 @@ class ShortenUrlService {
         this.shortenUrlRepo = shortenUrlRepo;
     }
 
-    execute(id: string) {
-        const originalUrlById = this.shortenUrlRepo.getOriginalUrlById(id);
+    async execute(hash: string) {
+        const originalUrlById = await this.shortenUrlRepo.getOriginalUrlByHash(hash);
         return new ShortenUrlResponse(originalUrlById);
     }
 }
@@ -46,7 +46,9 @@ export async function GET(
     console.log("ctx: ", context);
     console.log("ctx: ", context.params);
 
-    const shortenUrlResponse = new ShortenUrlService(new ShortenUrlRepo(new ShortenUrlMapperImpl())).execute(context.params.id);
+    const shortenUrlResponse = await new ShortenUrlService(
+        new ShortenUrlRepo(new ShortenUrlMapperGoogleSheetImpl())
+    ).execute(context.params.id);
 
     return Response.json({
         data: shortenUrlResponse
