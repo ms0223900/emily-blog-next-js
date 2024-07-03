@@ -20,8 +20,12 @@ class ShortenUrlRepo {
     }
 
     async getOriginalUrlByHash(id: string) {
-        await this.shortenUrlMapper.getOriginalUrl(id)
-        return id + "aaa";
+        const dto = await this.shortenUrlMapper.getOriginalUrl(id);
+        if (!dto?.url) {
+            // TODO, not found error
+            throw new Error("Url not found")
+        }
+        return dto.url;
     }
 }
 
@@ -46,11 +50,18 @@ export async function GET(
     console.log("ctx: ", context);
     console.log("ctx: ", context.params);
 
-    const shortenUrlResponse = await new ShortenUrlService(
-        new ShortenUrlRepo(new ShortenUrlMapperGoogleSheetImpl())
-    ).execute(context.params.id);
+    try {
+        const shortenUrlResponse = await new ShortenUrlService(
+            new ShortenUrlRepo(new ShortenUrlMapperGoogleSheetImpl())
+        ).execute(context.params.id);
 
-    return Response.json({
-        data: shortenUrlResponse
-    });
+        return Response.json({
+            data: shortenUrlResponse
+        });
+    } catch (e: any) {
+        return new Response(`Get shorten url error: ${e.message}`, {
+            status: 400,
+        });
+    }
+
 }
