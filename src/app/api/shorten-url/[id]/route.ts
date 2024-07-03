@@ -1,4 +1,3 @@
-import { NextPageContext } from "next";
 import { NextRequest } from "next/server";
 
 // export const dynamic = "force-dynamic";
@@ -15,10 +14,11 @@ class ShortenUrlService {
 
 export async function GET(
     request: NextRequest,
-    context: NextPageContext
+    context: { param: any }
 ): Promise<Response> {
     console.log("url: ", request.url);
     console.log("ctx: ", context);
+    console.log("ctx: ", context.param);
 
     const shortenUrlResponse = new ShortenUrlService().execute();
 
