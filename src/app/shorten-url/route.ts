@@ -7,6 +7,12 @@ class ShortenUrlResponse {
     url = "hi"
 }
 
+class ShortenUrlService {
+    execute() {
+        return new ShortenUrlResponse();
+    }
+}
+
 export async function GET(
     request: NextRequest,
     context: NextPageContext
@@ -14,9 +20,9 @@ export async function GET(
     console.log("url: ", request.url);
     console.log("ctx: ", context);
 
-    // const responsePromise = await fetchApiFromOuterExample();
+    const shortenUrlResponse = new ShortenUrlService().execute();
 
     return Response.json({
-        data: new ShortenUrlResponse()
+        data: shortenUrlResponse
     });
 }
