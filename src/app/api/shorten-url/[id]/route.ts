@@ -19,8 +19,8 @@ class ShortenUrlRepo {
         this.shortenUrlMapper = shortenUrlMapper;
     }
 
-    async getOriginalUrlByHash(id: string) {
-        const dto = await this.shortenUrlMapper.getOriginalUrlByHash(id);
+    async getOriginalUrlByHash(hash: string) {
+        const dto = await this.shortenUrlMapper.getOriginalUrlByHash(hash);
         if (!dto?.url) {
             // TODO, not found error
             throw new Error("Url not found")

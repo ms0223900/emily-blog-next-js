@@ -26,8 +26,14 @@ export class ShortenUrlMapperGoogleSheetImpl implements ShortenUrlMapper {
         return null;
     }
 
-    getOriginalUrlByHash(hash: string): Promise<ShortenUrlDto | null | undefined> {
-        return Promise.resolve(undefined);
+    async getOriginalUrlByHash(hash: string): Promise<ShortenUrlDto | null | undefined> {
+        try {
+            const sheetListData = await this.getAll();
+            return sheetListData.toList().find(dto => dto.hash === hash);
+        } catch (e) {
+            console.log("e: ", e);
+        }
+        return null;
     }
 
     private async getAll() {
