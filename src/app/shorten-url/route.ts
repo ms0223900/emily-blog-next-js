@@ -3,7 +3,7 @@ import { NextRequest } from "next/server";
 
 // export const dynamic = "force-dynamic";
 
-class SampleResponse {
+class ShortenUrlResponse {
     url = "hi"
 }
 
@@ -17,6 +17,6 @@ export async function GET(
     // const responsePromise = await fetchApiFromOuterExample();
 
     return Response.json({
-        data: new SampleResponse()
+        data: new ShortenUrlResponse()
     });
 }
