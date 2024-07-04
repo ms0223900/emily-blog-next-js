@@ -29,7 +29,7 @@ class ShortenUrlRepo {
     }
 }
 
-class ShortenUrlService {
+class GetShortenUrlByHashService {
     private shortenUrlRepo: ShortenUrlRepo;
 
     constructor(shortenUrlRepo: ShortenUrlRepo) {
@@ -46,12 +46,13 @@ export async function GET(
     request: NextRequest,
     context: { params: any }
 ): Promise<Response> {
-    console.log("url: ", request.url);
-    console.log("ctx: ", context);
-    console.log("ctx: ", context.params);
+    // console.log("url: ", request.url);
+    // console.log("ctx: ", context);
+    // console.log("ctx: ", context.params);
+    request.redirect
 
     try {
-        const shortenUrlResponse = await new ShortenUrlService(
+        const shortenUrlResponse = await new GetShortenUrlByHashService(
             new ShortenUrlRepo(new ShortenUrlMapperGoogleSheetImpl())
         ).execute(context.params.id);
 
@@ -63,5 +64,4 @@ export async function GET(
             status: 400,
         });
     }
-
 }
