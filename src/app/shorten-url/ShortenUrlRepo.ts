@@ -1,4 +1,5 @@
 import { ShortenUrlMapper } from "@/app/shorten-url/ShortenUrlMapper";
+import { RandomHashPassword } from "@/app/shorten-url/RandomHashPassword";
 
 export class ShortenUrlRepo {
     private shortenUrlMapper: ShortenUrlMapper;
@@ -17,7 +18,15 @@ export class ShortenUrlRepo {
     }
 
     async addUrl(url: string) {
-        let urlHash = "";
-        await this.shortenUrlMapper.addUrl(url, urlHash)
+        const dto = await this.shortenUrlMapper.addUrl(url, this.makeUrlHash());
+        return dto;
+    }
+
+    private makeUrlHash() {
+        const urlHash = new RandomHashPassword().generate({
+            withSpecialChar: true,
+            length: 10
+        });
+        return urlHash;
     }
 }
