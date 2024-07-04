@@ -1,5 +1,6 @@
 import { NextRequest } from "next/server";
-import { ShortenUrlMapper, ShortenUrlMapperGoogleSheetImpl } from "@/app/shorten-url/ShortenUrlMapper";
+import { ShortenUrlMapperGoogleSheetImpl } from "@/app/shorten-url/ShortenUrlMapper";
+import { ShortenUrlRepo } from "@/app/shorten-url/ShortenUrlRepo";
 
 // export const dynamic = "force-dynamic";
 
@@ -10,23 +11,6 @@ class ShortenUrlResponse {
         this.url = url
     }
 
-}
-
-class ShortenUrlRepo {
-    private shortenUrlMapper: ShortenUrlMapper;
-
-    constructor(shortenUrlMapper: ShortenUrlMapper) {
-        this.shortenUrlMapper = shortenUrlMapper;
-    }
-
-    async getOriginalUrlByHash(hash: string) {
-        const dto = await this.shortenUrlMapper.getOriginalUrlByHash(hash);
-        if (!dto?.url) {
-            // TODO, not found error
-            throw new Error("Url not found")
-        }
-        return dto.url;
-    }
 }
 
 class GetShortenUrlByHashService {

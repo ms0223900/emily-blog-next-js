@@ -5,6 +5,8 @@ export interface ShortenUrlMapper {
     getOriginalUrl(id: string): Promise<ShortenUrlDto | null | undefined>;
 
     getOriginalUrlByHash(hash: string): Promise<ShortenUrlDto | null | undefined>;
+
+    addUrl(url: string, urlHash: string): Promise<ShortenUrlDto | null | undefined>;
 }
 
 interface ShortenUrlDto {
@@ -34,6 +36,11 @@ export class ShortenUrlMapperGoogleSheetImpl implements ShortenUrlMapper {
             console.log("e: ", e);
         }
         return null;
+    }
+
+    addUrl(url: string, urlHash: string): Promise<ShortenUrlDto | null | undefined> {
+        // TODO
+        return Promise.resolve({} as ShortenUrlDto);
     }
 
     private async getAll() {
