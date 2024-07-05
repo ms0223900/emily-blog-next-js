@@ -11,7 +11,7 @@ class GenerateShortenUrlService {
     }
 
     async execute(url: string) {
-        await this.shortenUrlRepo.addUrl(url)
+        return await this.shortenUrlRepo.addUrl(url);
     }
 }
 
@@ -33,7 +33,7 @@ export async function POST(
         ).execute(reqBody.url);
 
         return Response.json({
-            // data: shortenUrlResponse
+            data: shortenUrlResponse
         });
     } catch (e: any) {
         return new Response(`Add shorten url error: ${e.message}`, {

@@ -4,7 +4,7 @@ import { SHEET_ID } from "@/mapper/config";
 
 const SCOPES = ["https://www.googleapis.com/auth/spreadsheets"];
 
-export async function append() {
+export async function append(appendVals: any[]) {
     const googleAuth = new GoogleAuth({
         scopes: SCOPES,
     });
@@ -15,9 +15,8 @@ export async function append() {
         spreadsheetId: SHEET_ID,
         range: "shorten-url",
         requestBody: {
-            // range: "A1",
             values: [
-                ["1", "2", "3"]
+                appendVals
             ]
         }
     });
