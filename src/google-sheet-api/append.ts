@@ -4,7 +4,7 @@ import { SHEET_ID } from "@/mapper/config";
 
 const SCOPES = ["https://www.googleapis.com/auth/spreadsheets"];
 
-export async function batchUpdate() {
+export async function append() {
     const googleAuth = new GoogleAuth({
         scopes: SCOPES,
     });
