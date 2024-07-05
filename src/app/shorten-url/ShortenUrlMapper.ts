@@ -1,5 +1,9 @@
 import { asyncFetchSingleSheetData } from "@/mapper";
 import { SheetListData } from "@/repos/post/SheetListData";
+import { batchUpdate } from "@/google-api";
+// import { promises as fs } from "fs";
+//
+// fs.readFile("")
 
 export interface ShortenUrlMapper {
     getOriginalUrl(id: string): Promise<ShortenUrlDto | null | undefined>;
@@ -38,8 +42,14 @@ export class ShortenUrlMapperGoogleSheetImpl implements ShortenUrlMapper {
         return null;
     }
 
-    addUrl(url: string, urlHash: string): Promise<ShortenUrlDto | null | undefined> {
+    async addUrl(url: string, urlHash: string): Promise<ShortenUrlDto | null | undefined> {
         // TODO
+        try {
+            const updatedRes = await batchUpdate();
+            console.log("updatedRes: ", updatedRes);
+        } catch (e) {
+            console.log("e: ", e);
+        }
         return Promise.resolve({} as ShortenUrlDto);
     }
 
