@@ -8,8 +8,8 @@ export function AboutMe() {
                 </h2>
             </div>
             <div className={'flex flex-col items-center m-auto w-60'}>
-                <div className={'bg-amber-100 rounded-full w-[186px] h-[186px]'}>
-                    <img src={''} />
+                <div className={'bg-amber-100 rounded-full overflow-hidden w-[186px] h-[186px]'}>
+                    <img className={'filter brightness-[130%]'} src={'./avatar_remove_bg.png'} alt={'avatar'} />
                 </div>
                 <h3 className={'py-4 font-bold text-xl'}>
                     自然捲
