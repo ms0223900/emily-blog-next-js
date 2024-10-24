@@ -58,6 +58,13 @@ const PostRepository = {
             return res;
         });
     },
+
+    getPostsByTagId: async (tagId: number | string) => {
+        const posts = await PostRepository.getPosts();
+        // TODO: 需要从数据库中获取 tagIds
+        // return posts.filter((post) => post.tagIds.includes(String(tagId)));
+        return posts;
+    },
 };
 
 export default PostRepository;
