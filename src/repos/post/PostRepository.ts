@@ -20,6 +20,7 @@ const POST_COLS: (PostKey | "tag1" | "tag2" | "tag3")[] = [
 const PostRepository = {
     getPosts: async () => {
         const data = await asyncFetchSingleSheetData("posts");
+        console.log("posts data: ", data);
         const posts = SheetListData.toVOList<Post>(data.values, POST_COLS as any[])
             .filter((post) => post.isPublished === "TRUE")
             .sortBy(({ createTime }) =>
