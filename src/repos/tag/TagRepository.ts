@@ -27,6 +27,8 @@ const TagRepo = {
       .filter((tagGroup) => !!tagGroup.tagGroupName)
       .toList();
 
+    console.log("tagGroups: ", tagGroups);
+
     const resMap: Record<SingleTagGroup["title"], SingleTagGroup> = {};
 
     // TODO, refactor
@@ -53,11 +55,11 @@ const TagRepo = {
 
     const res = Object.keys(resMap).map(
       (title) =>
-        ({
-          id: title,
-          title: resMap[title].title,
-          tags: resMap[title].tags,
-        } as SingleTagGroup)
+      ({
+        id: title,
+        title: resMap[title].title,
+        tags: resMap[title].tags,
+      } as SingleTagGroup)
     );
 
     return res;
