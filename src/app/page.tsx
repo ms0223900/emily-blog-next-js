@@ -24,8 +24,8 @@ interface CategoriesProps {
 }
 
 const Categories: React.FC<CategoriesProps> = ({
-                                                   tagsAmount
-                                               }) => {
+    tagsAmount
+}) => {
     return (
         <div>
             <h2 className={
@@ -57,7 +57,7 @@ const Categories: React.FC<CategoriesProps> = ({
     );
 };
 
-function getTagsAmount(postTags: (string & string[])[]): Record<string, number> {
+function getTagsAmount(postTags: string[][]): Record<string, number> {
     if (typeof postTags === 'string') {
         return ({});
     }
@@ -75,7 +75,7 @@ function getTagsAmount(postTags: (string & string[])[]): Record<string, number> 
 
 export default async function Home() {
     const homepageData = await getData();
-    const postTags = homepageData.posts.map(post => post.tags);
+    const postTags = homepageData.posts.map(post => post.tagList);
 
     const tagsAmount = getTagsAmount(postTags);
 
@@ -101,9 +101,9 @@ export default async function Home() {
             <div className={"grid grid-cols-4 gap-10"}>
                 <section className={"col-span-4 md:col-span-3"}>
                     <Banner title={firstPost?.title}
-                            intro={firstPost?.description}
-                            thumbnail={firstPost?.thumbnail}
-                            id={firstPost?.id} />
+                        intro={firstPost?.description}
+                        thumbnail={firstPost?.thumbnail?.src || ''}
+                        id={firstPost?.id} />
 
                     <div className={"max-w-[1252px]"}>
                         <div className={"flex justify-between w-full py-10"}>
@@ -114,9 +114,9 @@ export default async function Home() {
                         </div>
                         <CardList cardListData={homepageData.posts.slice(1).map(p => ({
                             ...p,
-                            thumbnailImg: p.thumbnail,
-                            tag: p.tags,
-                            intro: p.content
+                            thumbnailImg: p.thumbnail?.src || '',
+                            tag: p.tagList[0], // TODO: multiple tags
+                            intro: p.description
                         }))} />
                     </div>
                 </section>

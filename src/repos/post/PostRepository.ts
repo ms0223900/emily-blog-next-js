@@ -1,45 +1,73 @@
-import { asyncFetchSingleSheetData } from "@/mapper";
-import { Post } from "./types";
-import { SheetListData } from "./SheetListData";
+import queryArticleByArticleId from "@/gql/queryArticleByArticleId";
+import queryArticleList from "@/gql/queryArticleList";
+import { SingleBasicPostLinkData, SinglePost, Image, StrapiResponseAttr, ID } from "common-types";
+import { SingleQueriedArticle } from "@/gql/types";
 
-type PostKey = keyof Post;
-const POST_COLS: (PostKey | "tag1" | "tag2" | "tag3")[] = [
-    "id",
-    "title",
-    "description",
-    "thumbnail",
-    "content",
-    "tags",
-    "tag1",
-    "tag2",
-    "tag3",
-    "isPublished",
-    "createTime",
-];
+class SinglePostVo implements SinglePost {
+    uid: ID;
+    id: string;
+    title: string;
+    subTitle: string;
+    description: string;
+    thumbnail: Image;
+    content: string;
+    tagList: string[];
+    relatedArticleList: SingleBasicPostLinkData[];
+    createdAt: string;
+
+    constructor(article: StrapiResponseAttr<SingleQueriedArticle>) {
+        const {
+            id,
+            attributes: {
+                content,
+                article_tags,
+                related_articles,
+                articleId,
+                title,
+                subTitle,
+                description,
+                publishedAt,
+            }
+        } = article;
+
+        this.uid = id;
+        this.id = articleId;
+        this.title = title;
+        this.subTitle = subTitle;
+        this.description = description;
+        this.thumbnail = this.getImage(article);
+        this.content = content;
+        this.tagList = article_tags.data.map(tag => tag.attributes.title);
+        this.relatedArticleList = related_articles.data.map(article => ({
+            uid: article.id,
+            id: article.attributes.articleId,
+            title: article.attributes.title,
+            subTitle: article.attributes.subTitle,
+        }));
+        this.createdAt = publishedAt;
+    }
+
+    getImage(article: StrapiResponseAttr<SingleQueriedArticle>): Image {
+        if (article.attributes.thumbnailUrl) {
+            return { src: article.attributes.thumbnailUrl };
+        }
+        if (article.attributes.thumbnail.data[0]) {
+            return { src: article.attributes.thumbnail.data[0]?.attributes.url };
+        }
+        return { src: '' };
+    }
+}
 
 const PostRepository = {
-    getPosts: async () => {
-        const data = await asyncFetchSingleSheetData("posts");
-        // console.log("posts data: ", data);
-        const posts = SheetListData.toVOList<Post>(data.values, POST_COLS as any[])
-            .filter((post) => post.isPublished === "TRUE")
-            .sortBy(({ createTime }) =>
-                createTime ? new Date(createTime).getTime() : 1
-            )
-            .map((post) => ({
-                ...post,
-                tags: post.tags.split(", "),
-            }))
-            .toList() as (Post & { tags: string[] })[];
-        // log("posts", posts);
-
-        return posts;
+    getPosts: async (): Promise<SinglePost[]> => {
+        const res = await queryArticleList();
+        return res.data.articles.data.map(article => new SinglePostVo(article));
     },
 
     getPostById: async (id: number | string) => {
-        const data = await PostRepository.getPosts();
+        const res = await queryArticleByArticleId(String(id));
+        const foundPost = res.data.articles.data[0];
 
-        const foundPost = data.find((post) => String(post.id) === String(id));
         if (!foundPost) throw new Error(`POST_${id}_NOT_FOUND!`);
 
         return foundPost;
@@ -50,7 +78,7 @@ const PostRepository = {
         console.log("tagName: ", tagName);
 
         return posts.filter((post) => {
-            const res = (post.tags as unknown as string[]).includes(
+            const res = (post.tagList as unknown as string[]).includes(
                 decodeURI(tagName)
             );
             console.log("res: ", res);
