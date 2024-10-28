@@ -1,7 +1,7 @@
 import { asyncFetchSingleSheetData } from "@/mapper";
 import { SingleTagGroup, Tag, TagGroupFromAPI } from "./types";
 import { SheetListData } from "../post/SheetListData";
-import queryTagGroups, { TagEntity, TagGroupEntity } from "@/gql/queryTagGroups";
+import queryTagGroups, { TagEntity, TagGroupEntity } from "@/gql/tags/queryTagGroups";
 
 const TAG_COLS: (keyof Tag)[] = ["id", "title"];
 const TAG_GROUP_COLS: (keyof TagGroupFromAPI)[] = [

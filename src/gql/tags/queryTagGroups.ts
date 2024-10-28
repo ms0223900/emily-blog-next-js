@@ -1,10 +1,10 @@
 import { gql } from '@apollo/client';
-import TAG_GROUP_ENTITY from './fragments/tagGroup';
-import client from '.';
+import TAG_GROUP_ENTITY from '../fragments/tagGroup';
+import client from '..';
 
 interface QueryTagGroupsOptions {
-    paginationLimit?: number;
-    sort?: string[];
+  paginationLimit?: number;
+  sort?: string[];
 }
 
 const makeSchema = (options?: QueryTagGroupsOptions) => gql`
@@ -30,43 +30,43 @@ const makeSchema = (options?: QueryTagGroupsOptions) => gql`
 `;
 
 const queryTagGroups = (options?: QueryTagGroupsOptions) =>
-    client.query<{ tagGroups: QueriedTagGroupList }>({
-        query: makeSchema({
-            ...options,
-        }),
-    });
+  client.query<{ tagGroups: QueriedTagGroupList }>({
+    query: makeSchema({
+      ...options,
+    }),
+  });
 
 export default queryTagGroups;
 
 export interface TagEntity {
-    id: string;
-    attributes: {
-        title: string;
-    };
+  id: string;
+  attributes: {
+    title: string;
+  };
 }
 
 // Types
 export interface TagGroupAttributes {
-    title: string;
-    tags: {
-        data: Array<TagEntity>;
-    };
+  title: string;
+  tags: {
+    data: Array<TagEntity>;
+  };
 }
 
 export interface TagGroupEntity {
-    id: string;
-    attributes: TagGroupAttributes;
+  id: string;
+  attributes: TagGroupAttributes;
 }
 
 export interface QueriedTagGroupList {
-    data: TagGroupEntity[];
-    meta: {
-        pagination: {
-            total: number;
-            page: number;
-            pageSize: number;
-            pageCount: number;
-        };
+  data: TagGroupEntity[];
+  meta: {
+    pagination: {
+      total: number;
+      page: number;
+      pageSize: number;
+      pageCount: number;
     };
+  };
 }
 
