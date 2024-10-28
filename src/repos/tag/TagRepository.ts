@@ -1,22 +1,12 @@
-import { asyncFetchSingleSheetData } from "@/mapper";
-import { SingleTagGroup, Tag, TagGroupFromAPI } from "./types";
-import { SheetListData } from "../post/SheetListData";
-import queryTagGroups, { TagEntity, TagGroupEntity } from "@/gql/tags/queryTagGroups";
-
-const TAG_COLS: (keyof Tag)[] = ["id", "title"];
-const TAG_GROUP_COLS: (keyof TagGroupFromAPI)[] = [
-  "id",
-  "tagGroupName",
-  "tagId",
-  "tagName",
-];
+import { SingleTagGroup, Tag } from "./types";
+import queryTagGroups, { TagGroupEntity } from "@/gql/tags/queryTagGroups";
+import { TagEntity } from '@/gql/tags/types';
+import queryTags from "@/gql/tags/queryTags";
 
 const TagRepo = {
-  getTags: async () => {
-    const data = await asyncFetchSingleSheetData("tags");
-    const tags = SheetListData.toVOList<Tag>(data.values, TAG_COLS).toList();
-
-    return tags;
+  getTags: async (): Promise<Tag[]> => {
+    const res = await queryTags();
+    return res.data.tags.data.map(tag => new TagVo(tag));
   },
 
   getTagGroups: async (): Promise<SingleTagGroup[]> => {

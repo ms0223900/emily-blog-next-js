@@ -1,6 +1,7 @@
 import { gql } from '@apollo/client';
-import TAG_GROUP_ENTITY from '../fragments/tagGroup';
+import TAG_GROUP_ENTITY from './tagGroup';
 import client from '..';
+import { TagEntity } from './types';
 
 interface QueryTagGroupsOptions {
   paginationLimit?: number;
@@ -37,13 +38,6 @@ const queryTagGroups = (options?: QueryTagGroupsOptions) =>
   });
 
 export default queryTagGroups;
-
-export interface TagEntity {
-  id: string;
-  attributes: {
-    title: string;
-  };
-}
 
 // Types
 export interface TagGroupAttributes {
