@@ -1,6 +1,7 @@
 import { asyncFetchSingleSheetData } from "@/mapper";
 import { SingleTagGroup, Tag, TagGroupFromAPI } from "./types";
 import { SheetListData } from "../post/SheetListData";
+import queryTagGroups, { TagEntity, TagGroupEntity } from "@/gql/queryTagGroups";
 
 const TAG_COLS: (keyof Tag)[] = ["id", "title"];
 const TAG_GROUP_COLS: (keyof TagGroupFromAPI)[] = [
@@ -19,51 +20,31 @@ const TagRepo = {
   },
 
   getTagGroups: async (): Promise<SingleTagGroup[]> => {
-    const data = await asyncFetchSingleSheetData("tagGroups");
-    const tagGroups = SheetListData.toVOList<TagGroupFromAPI>(
-      data.values,
-      TAG_GROUP_COLS
-    )
-      .filter((tagGroup) => !!tagGroup.tagGroupName)
-      .toList();
-
-    console.log("tagGroups: ", tagGroups);
-
-    const resMap: Record<SingleTagGroup["title"], SingleTagGroup> = {};
-
-    // TODO, refactor
-    for (let i = 0; i < tagGroups.length; i++) {
-      const tagGroup = tagGroups[i];
-      if (!resMap[tagGroup.tagGroupName]) {
-        resMap[tagGroup.tagGroupName] = {
-          id: tagGroup.id,
-          title: tagGroup.tagGroupName,
-          tags: [
-            {
-              id: tagGroup.tagId,
-              title: tagGroup.tagName,
-            },
-          ],
-        };
-      } else {
-        resMap[tagGroup.tagGroupName].tags.push({
-          id: tagGroup.tagId,
-          title: tagGroup.tagName,
-        });
-      }
-    }
-
-    const res = Object.keys(resMap).map(
-      (title) =>
-      ({
-        id: title,
-        title: resMap[title].title,
-        tags: resMap[title].tags,
-      } as SingleTagGroup)
-    );
-
-    return res;
+    const res = await queryTagGroups();
+    return res.data.tagGroups.data.map(tagGroup => new SingleTagGroupVo(tagGroup));
   },
 };
+
+class SingleTagGroupVo implements SingleTagGroup {
+  id: string;
+  title: string;
+  tags: Tag[];
+
+  constructor(tagGroup: TagGroupEntity) {
+    this.id = tagGroup.id;
+    this.title = tagGroup.attributes.title;
+    this.tags = tagGroup.attributes.tags.data.map(tag => new TagVo(tag));
+  }
+}
+
+class TagVo implements Tag {
+  id: string;
+  title: string;
+
+  constructor(tag: TagEntity) {
+    this.id = tag.id;
+    this.title = tag.attributes.title;
+  }
+}
 
 export default TagRepo;

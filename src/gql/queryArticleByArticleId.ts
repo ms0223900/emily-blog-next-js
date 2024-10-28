@@ -5,7 +5,7 @@ import { QueriedArticleList } from "@/gql/queryArticleList";
 
 const schema = gql`
   query GET_ARTICLE_WITH_ARTICLE_ID($articleId: StringFilterInput) {
-    articles(filters: { articleId: $articleId }) {
+    articles: curlyChuArticles(filters: { articleId: $articleId }) {
       data {
         ...ARTICLE_ENTITY
       }

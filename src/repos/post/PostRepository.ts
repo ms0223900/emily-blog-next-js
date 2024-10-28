@@ -64,13 +64,13 @@ const PostRepository = {
         return res.data.articles.data.map(article => new SinglePostVo(article));
     },
 
-    getPostById: async (id: number | string) => {
+    getPostById: async (id: number | string): Promise<SinglePost> => {
         const res = await queryArticleByArticleId(String(id));
         const foundPost = res.data.articles.data[0];
 
         if (!foundPost) throw new Error(`POST_${id}_NOT_FOUND!`);
 
-        return foundPost;
+        return new SinglePostVo(foundPost);
     },
 
     getPostsByTag: async (tagName: string) => {
