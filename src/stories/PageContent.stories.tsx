@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { PostWithIdItem } from "../app/post/[id]/PostWithIdItem";
 import '@/app/globals.css'
+import { SinglePost } from 'common-types';
 
 const meta = {
     title: 'PageContent',
@@ -77,14 +78,12 @@ export default config;
 - https://storybook.js.org/docs/builders/webpack#troubleshooting`;
 export const PageContent: Story = {
     args: {
-        post: {
-            id: '1',
-            title: '【Storybook】Storybook 使用 tsconfig',
-            description: '安裝 plugin 或設定 alias',
-            thumbnail: "https://images.unsplash.com/photo-1574882957524-f36e6b0a5ea3?q=70&w=700&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        post: makePost({
+            thumbnail: {
+                src: "https://images.unsplash.com/photo-1574882957524-f36e6b0a5ea3?q=70&w=700&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            },
             content,
-            tags: '',
-        }
+        })
     }
 }
 const content1 = `---
@@ -141,13 +140,27 @@ const content1 = `---
 - 書 — 寂靜的春天`;
 export const PageContent2: Story = {
     args: {
-        post: {
-            id: '1',
-            title: '【Storybook】Storybook 使用 tsconfig',
-            description: '安裝 plugin 或設定 alias',
+        post: makePost({
             content: content1,
-            thumbnail: "https://images.unsplash.com/photo-1574882957524-f36e6b0a5ea3?q=70&w=700&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-            tags: '',
-        }
+        })
+    }
+}
+
+
+function makePost(post: Partial<SinglePost>) {
+    return {
+        id: '1',
+        title: '【Storybook】Storybook 使用 tsconfig',
+        description: '安裝 plugin 或設定 alias',
+        content: content1,
+        thumbnail: {
+            src: "https://images.unsplash.com/photo-1574882957524-f36e6b0a5ea3?q=70&w=700&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        },
+        tagList: [],
+        uid: '1',
+        subTitle: '',
+        relatedArticleList: [],
+        createdAt: '',
+        ...post,
     }
 }

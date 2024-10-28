@@ -1,13 +1,7 @@
 import PostRepository from "@/repos/post/PostRepository";
 import React, { memo } from "react";
 import CardItem from "@/components/homepage/CardItem";
-import { Post } from "@/repos/post/types";
-
-export interface SinglePost extends Post {
-    id: string;
-    title: string;
-}
-
+import { SinglePost } from "common-types";
 export interface PostsProps {
     postList: SinglePost[];
 }
@@ -21,9 +15,9 @@ const Posts = async () => {
             <ul className={"grid grid-cols-2 md:grid-cols-4 gap-4"}>
                 {postList.map((post) => (
                     <CardItem key={post.id}
-                              thumbnailImg={post.thumbnail}
-                              tag={post.tags}
-                              intro={post.description} {...post} />
+                        thumbnailImg={post.thumbnail?.src || ""}
+                        tag={post.tagList.join(", ")}
+                        intro={post.description} {...post} />
                 ))}
             </ul>
         </div>
