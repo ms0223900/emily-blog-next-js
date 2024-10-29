@@ -6,7 +6,7 @@ import { Tag as TagType } from "common-types";
 
 export interface CardItemProps {
     id: string;
-    tag: TagType;
+    tagList: TagType[];
     title: string;
     intro: string;
     thumbnailImg: string;
@@ -22,7 +22,11 @@ const CardItem: React.FC<CardItemProps> = (props) => {
                     <img className={"block object-cover w-full h-full object-top"} src={props.thumbnailImg}
                         alt={"thumbnailImg"} />
                 </div>
-                <Tag tag={props.tag} />
+                <div className="flex gap-1">
+                    {props.tagList.map(tag => (
+                        <Tag key={tag.id} tag={tag} />
+                    ))}
+                </div>
                 <h3 className={'text-2xl line-clamp-2 leading-normal'}>{props.title}</h3>
                 <p className={'w-full line-clamp-4'}>{props.intro}</p>
             </Link></li>

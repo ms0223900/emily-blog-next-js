@@ -14,11 +14,11 @@ const Posts = async () => {
             <h1 className={`text-xl`}>All Posts Here :)</h1>
             <ul className={"grid grid-cols-2 md:grid-cols-4 gap-4"}>
                 {postList.map((post) => (
-                    <CardItem key={post.id}
+                    <CardItem
+                        key={post.id}
                         thumbnailImg={post.thumbnail?.src || ""}
-                        // TODO: multiple tags
-                        tag={post.tagList[0]}
-                        intro={post.description} {...post} />
+                        intro={post.description}
+                        {...post} />
                 ))}
             </ul>
         </div>

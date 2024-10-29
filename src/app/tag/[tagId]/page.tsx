@@ -19,7 +19,6 @@ const PostsByTag: React.FC<{ params: { tagId: string } }> = async ({
             <CardList cardListData={posts.map(p => ({
                 ...p,
                 thumbnailImg: p.thumbnail?.src || '',
-                tag: p.tagList[0], // TODO: multiple tags
                 intro: p.description
             }))} />
         </div>

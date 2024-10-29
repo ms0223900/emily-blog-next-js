@@ -8,7 +8,6 @@ import queryTagById from "@/gql/tags/queryTagById";
 const TagRepo = {
   getTags: async (): Promise<Tag[]> => {
     const res = await queryTags();
-    console.log("res: ", res.data.tags.data);
     return res.data.tags.data.map(tag => new TagVo(tag));
   },
 

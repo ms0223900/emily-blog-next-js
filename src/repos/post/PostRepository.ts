@@ -77,13 +77,11 @@ const PostRepository = {
 
     getPostsByTag: async (tagName: string) => {
         const posts = await PostRepository.getPosts();
-        console.log("tagName: ", tagName);
 
         return posts.filter((post) => {
             const res = (post.tagList as unknown as string[]).includes(
                 decodeURI(tagName)
             );
-            console.log("res: ", res);
 
             return res;
         });

@@ -12,7 +12,6 @@ export interface BannerProps extends Pick<Post, 'id' | 'title' | 'thumbnail' | '
 }
 
 const Banner: React.FC<BannerProps> = (props) => {
-    console.log(props);
     return (
         <Link href={getPostLink(props.id)}>
             <div className={"bg-amber-400 w-full h-[600px] relative rounded-lg overflow-hidden"}>

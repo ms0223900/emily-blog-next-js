@@ -119,7 +119,6 @@ export default async function Home() {
                         <CardList cardListData={homepageData.posts.slice(1).map(p => ({
                             ...p,
                             thumbnailImg: p.thumbnail?.src || '',
-                            tag: p.tagList[0], // TODO: multiple tags
                             intro: p.description
                         }))} />
                     </div>
