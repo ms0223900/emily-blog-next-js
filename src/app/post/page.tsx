@@ -16,7 +16,8 @@ const Posts = async () => {
                 {postList.map((post) => (
                     <CardItem key={post.id}
                         thumbnailImg={post.thumbnail?.src || ""}
-                        tag={post.tagList.join(", ")}
+                        // TODO: multiple tags
+                        tag={post.tagList[0]}
                         intro={post.description} {...post} />
                 ))}
             </ul>
