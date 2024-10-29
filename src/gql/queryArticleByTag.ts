@@ -4,20 +4,12 @@ import client from "@/gql";
 import ARTICLE_ENTITY from './fragments/article';
 import { QueriedArticleList } from './queryArticleList';
 
-export interface QueryArticleListOptions {
-  paginationLimit?: number;
-  articleUid?: ID;
-}
-
-const makeSchema = ({ paginationLimit = -1 }: QueryArticleListOptions) => gql`
-  query GET_ARTICLE_WITH_ARTICLE_ID($tagName: StringFilterInput, , $articleUid: ID) {
-    articles(filters: { 
-        article_tags: { title: $tagName },
-        and: {
-          id: { lt: $articleUid }
-        } 
+const makeSchema = () => gql`
+  query GET_ARTICLES_WITH_TAG_ID($tagId: IDFilterInput) {
+    articles: curlyChuArticles(filters: { 
+        curly_chu_article_tags: { id: $tagId },
       }, 
-      pagination: { limit: ${paginationLimit} }, 
+      pagination: { limit: -1 }, 
       sort: "id:desc") {
       data {
         ...ARTICLE_ENTITY
@@ -27,21 +19,17 @@ const makeSchema = ({ paginationLimit = -1 }: QueryArticleListOptions) => gql`
   ${ARTICLE_ENTITY}
 `;
 
-const queryArticleByTag = (
-  tagName: string,
-  options?: QueryArticleListOptions
+const queryArticlesByTagId = (
+  tagId: ID,
 ) => {
   return client.query<{ articles: QueriedArticleList }>({
-    query: makeSchema({
-      ...options,
-    }),
+    query: makeSchema(),
     variables: {
-      tagName: {
-        contains: tagName,
+      tagId: {
+        eq: tagId,
       },
-      articleUid: options?.articleUid,
     },
   });
 };
 
-export default queryArticleByTag;
+export default queryArticlesByTagId;

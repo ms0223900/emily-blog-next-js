@@ -1,5 +1,5 @@
-import queryArticleByTag from './queryArticleByTag';
+import queryArticlesByTagId from './queryArticleByTag';
 
-const queryProjectTagArticles = () => queryArticleByTag('projects', {});
+const queryProjectTagArticles = () => queryArticlesByTagId('projects', {});
 
 export default queryProjectTagArticles;

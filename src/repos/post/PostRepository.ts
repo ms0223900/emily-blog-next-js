@@ -3,6 +3,7 @@ import queryArticleList from "@/gql/queryArticleList";
 import { SingleBasicPostLinkData, SinglePost, Image, StrapiResponseAttr, ID, Tag } from "common-types";
 import { SingleQueriedArticle } from "@/gql/types";
 import { TagVo } from "../tag/TagRepository";
+import queryArticlesByTagId from "@/gql/queryArticleByTag";
 
 class SinglePostVo implements SinglePost {
     uid: ID;
@@ -88,11 +89,9 @@ const PostRepository = {
         });
     },
 
-    getPostsByTagId: async (tagId: number | string) => {
-        const posts = await PostRepository.getPosts();
-        // TODO: 需要从数据库中获取 tagIds
-        // return posts.filter((post) => post.tagIds.includes(String(tagId)));
-        return posts;
+    getPostsByTagId: async (tagId: ID) => {
+        const res = await queryArticlesByTagId(tagId);
+        return res.data.articles.data.map(article => new SinglePostVo(article));
     },
 };
 
