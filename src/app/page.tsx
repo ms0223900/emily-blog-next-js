@@ -82,7 +82,6 @@ function getTagsAmount(postTags: Tag[][]): Record<ID, TagAmount> {
 export default async function Home() {
     const homepageData = await getData();
     const postTags = homepageData.posts.map(post => post.tagList);
-    console.log(postTags);
 
     const tagsAmount = getTagsAmount(postTags);
 
@@ -107,7 +106,8 @@ export default async function Home() {
                     <Banner title={firstPost?.title}
                         intro={firstPost?.description}
                         thumbnail={firstPost?.thumbnail?.src || ''}
-                        id={firstPost?.id} />
+                        id={firstPost?.id}
+                        tagList={[...(JSON.parse(JSON.stringify(firstPost?.tagList || [])))]} />
 
                     <div className={"max-w-[1252px]"}>
                         <div className={"flex justify-between w-full py-10"}>
