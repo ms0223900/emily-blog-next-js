@@ -28,12 +28,12 @@ export default async function RootLayout({
                     </Link>
                     <div className={"flex gap-6 pl-10"}>
                         {tagGroups.map((tagGroup, i) => (
-                            <div key={tagGroup.id + i} className="group/tagItem inline-block relative">
+                            <div key={tagGroup.id + i} className="p-2 group/tagItem inline-block relative rounded-md hover:bg-gray-100">
                                 <Link className={""} href={"/"}>{tagGroup.title}</Link>
-                                <ul className={"absolute top-6 hidden group-hover/tagItem:list-item"}>
+                                <ul className={"absolute top-8 hidden group-hover/tagItem:list-item"}>
                                     {tagGroup.tags.map((tag, i) => (
-                                        <li key={`tag-${tag.title}-${i}`}>
-                                            <Link href={`/tag/${tag.title}`}>{tag.title}</Link>
+                                        <li key={`tag-${tag.title}-${i}`} className="py-2 px-4 text-blue-500">
+                                            <Link href={`/tag/${tag.id}`}>{tag.title}</Link>
                                         </li>
                                     ))}
                                 </ul>
