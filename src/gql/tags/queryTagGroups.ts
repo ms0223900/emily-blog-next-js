@@ -8,10 +8,10 @@ interface QueryTagGroupsOptions {
   sort?: string[];
 }
 
-const makeSchema = (options?: QueryTagGroupsOptions) => gql`
+const makeSchema = () => gql`
   query GetTagGroups {
     tagGroups: curlyChuArticleTagGroups(
-      pagination: { limit: ${options?.paginationLimit || -1} }
+      pagination: { limit: -1 }
       sort: ["createdAt:desc"]
     ) {
       data {
@@ -30,11 +30,9 @@ const makeSchema = (options?: QueryTagGroupsOptions) => gql`
   ${TAG_GROUP_ENTITY}
 `;
 
-const queryTagGroups = (options?: QueryTagGroupsOptions) =>
+const queryTagGroups = () =>
   client.query<{ tagGroups: QueriedTagGroupList }>({
-    query: makeSchema({
-      ...options,
-    }),
+    query: makeSchema(),
   });
 
 export default queryTagGroups;
