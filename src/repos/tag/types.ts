@@ -1,5 +1,7 @@
+import { ID } from "common-types";
+
 export interface Tag {
-  id: string;
+  id: ID;
   title: string;
 }
 

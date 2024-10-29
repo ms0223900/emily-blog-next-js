@@ -2,6 +2,7 @@ import { SingleTagGroup, Tag } from "./types";
 import queryTagGroups, { TagGroupEntity } from "@/gql/tags/queryTagGroups";
 import { TagEntity } from '@/gql/tags/types';
 import queryTags from "@/gql/tags/queryTags";
+import { ID } from "common-types";
 
 const TagRepo = {
   getTags: async (): Promise<Tag[]> => {
@@ -27,8 +28,8 @@ class SingleTagGroupVo implements SingleTagGroup {
   }
 }
 
-class TagVo implements Tag {
-  id: string;
+export class TagVo implements Tag {
+  id: ID;
   title: string;
 
   constructor(tag: TagEntity) {

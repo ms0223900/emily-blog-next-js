@@ -7,6 +7,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { cn } from "@/styles/helpers";
 import React from "react";
+import { ID, Tag } from "common-types";
 
 async function getData() {
     const homepageData = await HomeHomepageRepository.getData();
@@ -15,7 +16,8 @@ async function getData() {
 }
 
 interface TagAmount {
-    tag: string
+    tagId: ID
+    tagTitle: string
     amount: number
 }
 
@@ -38,14 +40,14 @@ const Categories: React.FC<CategoriesProps> = ({
             <div className={'pt-[40px]'}>
                 {tagsAmount.map(tagAmount => (
                     <Link
-                        key={tagAmount.tag}
-                        href={`/tag/${tagAmount.tag}`}
+                        key={tagAmount.tagId}
+                        href={`/tag/${tagAmount.tagId}`}
                         className={
                             cn('flex justify-between', 'pb-2')
                         }
                     >
                         <p>
-                            {tagAmount.tag}
+                            {tagAmount.tagTitle}
                         </p>
                         <p>
                             {tagAmount.amount}
@@ -57,17 +59,21 @@ const Categories: React.FC<CategoriesProps> = ({
     );
 };
 
-function getTagsAmount(postTags: string[][]): Record<string, number> {
+function getTagsAmount(postTags: Tag[][]): Record<ID, TagAmount> {
     if (typeof postTags === 'string') {
         return ({});
     }
-    let res = {} as Record<string, number>;
+    let res = {} as Record<ID, TagAmount>;
     for (let i = 0; i < postTags.length; i++) {
         const singlePostTags = postTags[i];
         for (let j = 0; j < singlePostTags.length; j++) {
             const tag = singlePostTags[j];
             if (!tag) continue
-            res[tag] = (res[tag] || 0) + 1
+            res[tag.id] = {
+                tagId: tag.id,
+                tagTitle: tag.title,
+                amount: (res[tag.id]?.amount || 0) + 1
+            }
         }
     }
     return res;
@@ -76,6 +82,7 @@ function getTagsAmount(postTags: string[][]): Record<string, number> {
 export default async function Home() {
     const homepageData = await getData();
     const postTags = homepageData.posts.map(post => post.tagList);
+    console.log(postTags);
 
     const tagsAmount = getTagsAmount(postTags);
 
@@ -83,11 +90,8 @@ export default async function Home() {
     let tagsAmountList = (() => {
         let res: TagAmount[] = []
         for (let tagsAmountKey in tagsAmount) {
-            const amount = tagsAmount[tagsAmountKey];
-            res.push({
-                tag: tagsAmountKey,
-                amount,
-            })
+            const tagAmount = tagsAmount[tagsAmountKey];
+            res.push(tagAmount)
         }
         return res;
     })();

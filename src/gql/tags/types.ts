@@ -1,6 +1,8 @@
 
+import { ID } from "common-types";
+
 export interface TagEntity {
-    id: string;
+    id: ID;
     attributes: {
         title: string;
     };

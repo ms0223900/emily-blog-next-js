@@ -1,7 +1,8 @@
 import queryArticleByArticleId from "@/gql/queryArticleByArticleId";
 import queryArticleList from "@/gql/queryArticleList";
-import { SingleBasicPostLinkData, SinglePost, Image, StrapiResponseAttr, ID } from "common-types";
+import { SingleBasicPostLinkData, SinglePost, Image, StrapiResponseAttr, ID, Tag } from "common-types";
 import { SingleQueriedArticle } from "@/gql/types";
+import { TagVo } from "../tag/TagRepository";
 
 class SinglePostVo implements SinglePost {
     uid: ID;
@@ -11,7 +12,7 @@ class SinglePostVo implements SinglePost {
     description: string;
     thumbnail: Image;
     content: string;
-    tagList: string[];
+    tagList: Tag[];
     relatedArticleList: SingleBasicPostLinkData[];
     createdAt: string;
 
@@ -37,7 +38,7 @@ class SinglePostVo implements SinglePost {
         this.description = description;
         this.thumbnail = this.getImage(article);
         this.content = content;
-        this.tagList = article_tags.data.map(tag => tag.attributes.title);
+        this.tagList = article_tags.data.map(tag => new TagVo(tag));
         this.relatedArticleList = related_articles.data.map(article => ({
             uid: article.id,
             id: article.attributes.articleId,

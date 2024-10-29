@@ -12,6 +12,11 @@ declare module 'common-types' {
     subNavList: SingleNav[];
   }
 
+  interface Tag {
+    id: ID;
+    title: string;
+  }
+
   interface SinglePost extends TimeRecord {
     uid: ID;
     id: string; // 網址用的id，是一串文字
@@ -20,7 +25,7 @@ declare module 'common-types' {
     description: string;
     content: string | null;
     thumbnail: Image | null;
-    tagList: string[];
+    tagList: Tag[];
     relatedArticleList: SingleBasicPostLinkData[];
   }
   type SingleBasicPostLinkData = Pick<
