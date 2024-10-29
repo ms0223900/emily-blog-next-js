@@ -30,13 +30,13 @@ export default async function RootLayout({
                         {tagGroups.map((tagGroup, i) => (
                             <div key={tagGroup.id + i} className="group/tagItem inline-block relative">
                                 <Link className={""} href={"/"}>{tagGroup.title}</Link>
-                                {/* <ul className={"absolute top-6 hidden group-hover/tagItem:list-item"}>
+                                <ul className={"absolute top-6 hidden group-hover/tagItem:list-item"}>
                                     {tagGroup.tags.map((tag, i) => (
                                         <li key={`tag-${tag.title}-${i}`}>
                                             <Link href={`/tag/${tag.title}`}>{tag.title}</Link>
                                         </li>
                                     ))}
-                                </ul> */}
+                                </ul>
                             </div>
                         ))}
                     </div>
