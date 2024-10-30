@@ -86,7 +86,7 @@ export default async function Home() {
     const tagsAmount = getTagsAmount(postTags);
 
     const firstPost = homepageData.posts[0];
-    let tagsAmountList = (() => {
+    const tagsAmountList = (() => {
         let res: TagAmount[] = []
         for (let tagsAmountKey in tagsAmount) {
             const tagAmount = tagsAmount[tagsAmountKey];
@@ -94,6 +94,10 @@ export default async function Home() {
         }
         return res;
     })();
+
+    if (!firstPost) {
+        throw new Error('First post not found :(');
+    }
 
     return (
         <main
@@ -103,11 +107,11 @@ export default async function Home() {
             </Head>
             <div className={"grid grid-cols-4 gap-10"}>
                 <section className={"col-span-4 md:col-span-3"}>
-                    <Banner title={firstPost?.title}
-                        intro={firstPost?.description}
-                        thumbnail={firstPost?.thumbnail?.src || ''}
-                        id={firstPost?.id}
-                        tagList={[...(JSON.parse(JSON.stringify(firstPost?.tagList || [])))]} />
+                    <Banner title={firstPost.title}
+                        intro={firstPost.description}
+                        thumbnail={firstPost.thumbnail?.src || ''}
+                        id={firstPost.id}
+                        tagList={[...(JSON.parse(JSON.stringify(firstPost.tagList || [])))]} />
 
                     <div className={"max-w-[1252px]"}>
                         <div className={"flex justify-between w-full py-10"}>
