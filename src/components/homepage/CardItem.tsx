@@ -10,11 +10,12 @@ export interface CardItemProps {
     title: string;
     intro: string;
     thumbnailImg: string;
+    className?: string;
 }
 
 const CardItem: React.FC<CardItemProps> = (props) => {
     return (
-        <li className={""}>
+        <li className={props.className} id={props.id}>
             <Link
                 className={"flex flex-col items-start gap-2 justify-stretch h-full p-6 pt-0 bg-white text-black border rounded-xl"}
                 href={getPostLink(props.id)}>
