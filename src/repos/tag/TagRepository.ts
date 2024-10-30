@@ -4,6 +4,7 @@ import { TagEntity } from '@/gql/tags/types';
 import queryTags from "@/gql/tags/queryTags";
 import { ID } from "common-types";
 import queryTagById from "@/gql/tags/queryTagById";
+import { TagRepositoryException } from "./TagRepositoryException";
 
 const TagRepo = {
   getTags: async (): Promise<Tag[]> => {
@@ -18,7 +19,11 @@ const TagRepo = {
 
   getTagById: async (tagId: ID): Promise<Tag> => {
     const res = await queryTagById(tagId);
-    return new TagVo(res.data.tags.data[0]);
+    const tagData = res.data.tags.data[0];
+    if (!tagData) {
+      throw new TagRepositoryException(`Tag with ID ${tagId} not found`);
+    }
+    return new TagVo(tagData);
   },
 };
 
