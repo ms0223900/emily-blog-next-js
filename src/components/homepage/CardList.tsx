@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo } from 'react';
 import CardItem, { CardItemProps } from "@/components/homepage/CardItem";
-import { Pagination } from './Pagination';
+import { Pagination } from '@/components/common/Pagination';
 
 export interface CardListProps {
     cardListData: CardItemProps[];
