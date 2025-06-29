@@ -11,7 +11,9 @@ const Posts = async () => {
 
     return (
         <div className="p-2 max-w-[1200px] m-auto">
-            <h1 className={`text-xl`}>All Posts Here :)</h1>
+            <h1 className={`text-xl font-bold text-center py-6`}>
+                所有文章
+            </h1>
             <ul className={"grid grid-cols-2 md:grid-cols-4 gap-4"}>
                 {postList.map((post) => (
                     <CardItem
