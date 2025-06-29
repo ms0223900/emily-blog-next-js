@@ -36,7 +36,38 @@ const CardList: React.FC<CardListProps> = ({
 
     const renderPageNumbers = () => {
         const pageNumbers = [];
-        for (let i = 1; i <= totalPages; i++) {
+        const showPageCount = 1; // 當前頁前後各顯示的頁數
+
+        // 始終顯示第一頁
+        if (totalPages > 0) {
+            pageNumbers.push(
+                <button
+                    key={1}
+                    onClick={() => handlePageChange(1)}
+                    className={`px-4 py-2 mx-1 border rounded-lg transition-colors ${currentPage === 1
+                        ? 'bg-yellow-400 text-black border-yellow-400'
+                        : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+                        }`}
+                >
+                    1
+                </button>
+            );
+        }
+
+        // 如果當前頁距離第一頁超過showPageCount+1，顯示省略號
+        if (currentPage > showPageCount + 2) {
+            pageNumbers.push(
+                <span key="ellipsis-start" className="px-4 py-2 mx-1">
+                    ...
+                </span>
+            );
+        }
+
+        // 顯示當前頁附近的頁碼
+        const startPage = Math.max(2, currentPage - showPageCount);
+        const endPage = Math.min(totalPages - 1, currentPage + showPageCount);
+
+        for (let i = startPage; i <= endPage; i++) {
             pageNumbers.push(
                 <button
                     key={i}
@@ -50,6 +81,32 @@ const CardList: React.FC<CardListProps> = ({
                 </button>
             );
         }
+
+        // 如果當前頁距離最後一頁超過showPageCount+1，顯示省略號
+        if (currentPage < totalPages - showPageCount - 1) {
+            pageNumbers.push(
+                <span key="ellipsis-end" className="px-4 py-2 mx-1">
+                    ...
+                </span>
+            );
+        }
+
+        // 如果總頁數大於1，始終顯示最後一頁
+        if (totalPages > 1) {
+            pageNumbers.push(
+                <button
+                    key={totalPages}
+                    onClick={() => handlePageChange(totalPages)}
+                    className={`px-4 py-2 mx-1 border rounded-lg transition-colors ${currentPage === totalPages
+                        ? 'bg-yellow-400 text-black border-yellow-400'
+                        : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+                        }`}
+                >
+                    {totalPages}
+                </button>
+            );
+        }
+
         return pageNumbers;
     };
 
