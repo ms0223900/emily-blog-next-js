@@ -5,6 +5,7 @@ import "./globals.css";
 import Link from "next/link";
 import TagRepo from "@/repos/tag/TagRepository";
 import { SingleTagGroup } from "@/repos/tag/types";
+import RwdComponent from "@/components/common/RwdComponent";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,7 +24,10 @@ export default async function RootLayout({
     return (
         <html lang="en">
             <body className={inter.className}>
-                <NavBar tagGroups={tagGroups} />
+                <RwdComponent
+                    mobileComponent={<MobileNavBar tagGroups={tagGroups} />}
+                    desktopComponent={<NavBar tagGroups={tagGroups} />}
+                />
 
                 <main>
                     {children}
@@ -31,6 +35,10 @@ export default async function RootLayout({
             </body>
         </html>
     );
+}
+
+const MobileNavBar = ({ tagGroups }: { tagGroups: SingleTagGroup[] }) => {
+    return null;
 }
 
 const NavBar = ({ tagGroups }: { tagGroups: SingleTagGroup[] }) => {
