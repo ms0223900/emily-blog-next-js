@@ -6,24 +6,30 @@ const SearchPage = async ({ params }: { params: { searchVal: string } }) => {
 
     const postList = await PostRepository.getPosts();
 
+    const cardListData = JSON.parse(JSON.stringify(postList.map(p => ({
+        ...p,
+        thumbnailImg: p.thumbnail?.src || '',
+        intro: p.description
+    }))));
+
     return <div>
         <h1 id="search-title">Search Results for:
             <span id="search-val" className="text-gray-800">{params.searchVal}</span>
         </h1>
         <div className="max-w-[1200px] mx-auto">
-            <CardList cardListData={postList.map(p => ({
-                ...p,
-                thumbnailImg: p.thumbnail?.src || '',
-                intro: p.description,
-                className: 'hidden'
-            }))} />
+            <CardList cardListData={cardListData} />
         </div>
         <script dangerouslySetInnerHTML={{
             __html: `
             const searchParams = new URLSearchParams(window.location.search);
             const searchVal = searchParams.get('search') || '';
             
-            const postList = ${JSON.stringify(postList)}
+            const postList = ${JSON.stringify(postList.map(p => ({
+                id: p.id.toString(),
+                title: p.title,
+                subTitle: p.subTitle,
+                description: p.description
+            })))}
 
             const filteredPostList = postList.filter(p => 
                 p.title.includes(searchVal) || 

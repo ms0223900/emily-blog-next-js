@@ -99,6 +99,12 @@ export default async function Home() {
         throw new Error('First post not found :(');
     }
 
+    const cardListData = JSON.parse(JSON.stringify(homepageData.posts.slice(1).map(p => ({
+        ...p,
+        thumbnailImg: p.thumbnail?.src || '',
+        intro: p.description
+    }))));
+
     return (
         <main
             className="flex min-h-screen flex-col items-center justify-between p-2 md:p-8 lg:p-24 bg-white text-black">
@@ -120,11 +126,7 @@ export default async function Home() {
                                 {`more >>`}
                             </Link>
                         </div>
-                        <CardList cardListData={homepageData.posts.slice(1).map(p => ({
-                            ...p,
-                            thumbnailImg: p.thumbnail?.src || '',
-                            intro: p.description
-                        }))} />
+                        <CardList cardListData={cardListData} />
                     </div>
                 </section>
                 <section className={
