@@ -109,7 +109,7 @@ export const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages,
     };
 
     return (
-        <div className="flex justify-center items-center mt-8 gap-2">
+        <div className="flex justify-center items-center py-10 gap-2">
             <PageButton
                 page="← Prev."
                 isActive={false}
