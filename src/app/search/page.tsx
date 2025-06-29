@@ -13,11 +13,14 @@ const SearchPage = async ({ params }: { params: { searchVal: string } }) => {
     }))));
 
     return <div>
-        <h1 id="search-title">Search Results for:
+        <h1 id="search-title" className="text-2xl font-bold text-center py-4">Search Results for:
             <span id="search-val" className="text-gray-800">{params.searchVal}</span>
         </h1>
         <div className="max-w-[1200px] mx-auto">
-            <CardList cardListData={cardListData} />
+            <div id="loading" className="text-center py-4">Loading...</div>
+            <div id="card-list--wrapper" className="hidden">
+                <CardList cardListData={cardListData} />
+            </div>
         </div>
         <script dangerouslySetInnerHTML={{
             __html: `
@@ -38,14 +41,25 @@ const SearchPage = async ({ params }: { params: { searchVal: string } }) => {
             )
 
             window.addEventListener('load', () => {
+                
                 setTimeout(() => {
-                    const searchValElement = document.getElementById('search-val')
-                    searchValElement.innerHTML = searchVal
+                    const cardListWrapper = document.getElementById('card-list--wrapper');
+                    const loadingElement = document.getElementById('loading');
+                    const searchValElement = document.getElementById('search-val');
+                    searchValElement.innerHTML = searchVal;
+                    
+                    cardListWrapper.style.display = 'block';
+                    loadingElement.style.display = 'none';
+
+                    postList.forEach(p => {
+                        document.getElementById(p.id).style.display = 'none';
+                    });
+                    
                     filteredPostList.forEach(p => {
                         document.getElementById(p.id).style.display = 'block';
-                    })
-                }, 100)
-            })
+                    });
+                }, 100);
+            });
             
             ` }} />
     </div>
