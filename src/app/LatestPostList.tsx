@@ -3,6 +3,7 @@ import PostRepository from '@/repos/post/PostRepository';
 import Link from 'next/link';
 import { getPostLink } from '@/app/post/utils';
 import { cn } from '@/styles/helpers';
+import { FaCalendar } from 'react-icons/fa';
 
 export async function LatestPostList() {
     const posts = await PostRepository.getPosts();
@@ -38,7 +39,7 @@ export async function LatestPostList() {
                             </h3>
                         </Link>
                         <div className="flex items-center gap-2 mb-2 text-sm text-gray-500">
-
+                            <FaCalendar className="text-gray-300" />
                             <time dateTime={post.createdAt}>
                                 {new Date(post.createdAt).toLocaleDateString('en-US', {
                                     day: 'numeric',
