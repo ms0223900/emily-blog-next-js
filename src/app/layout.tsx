@@ -39,7 +39,7 @@ export default async function RootLayout({
 
 const MobileNavBar = ({ tagGroups }: { tagGroups: SingleTagGroup[] }) => {
     return (
-        <div className="fixed top-0 left-0 w-full bg-white shadow-md z-50 group">
+        <div className="sticky top-0 left-0 w-full bg-white shadow-md z-50 group">
             <div className="flex justify-between items-center p-4">
                 <Link href="/">
                     <img
@@ -78,18 +78,18 @@ const MobileNavBar = ({ tagGroups }: { tagGroups: SingleTagGroup[] }) => {
                             d="M6 18L18 6M6 6l12 12"
                         />
                     </svg>
-                    <div className="bg-white p-4 border-t hidden peer-checked:block">
+                    <div className="fixed top-0 right-0 h-full w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out hidden peer-checked:block translate-x-0 z-50 overflow-y-auto">
                         {tagGroups.map((tagGroup, i) => (
-                            <div key={tagGroup.id + i} className="mb-4">
-                                <div className="font-medium text-gray-800 py-2">
+                            <div key={tagGroup.id + i} className="mb-4 p-4">
+                                <div className="font-medium text-gray-800 py-2 border-b">
                                     {tagGroup.title}
                                 </div>
-                                <ul className="pl-4">
+                                <ul className="pl-2 mt-2">
                                     {tagGroup.tags.map((tag, i) => (
-                                        <li key={`tag-${tag.title}-${i}`} className="py-1">
+                                        <li key={`tag-${tag.title}-${i}`} className="py-2">
                                             <Link
                                                 href={`/tag/${tag.id}`}
-                                                className="block text-gray-700 hover:text-blue-600"
+                                                className="block text-gray-700 hover:text-blue-600 px-2 py-1 rounded hover:bg-gray-100"
                                             >
                                                 {tag.title}
                                             </Link>
