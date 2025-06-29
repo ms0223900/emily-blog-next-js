@@ -47,7 +47,7 @@ const NavBar = ({ tagGroups }: { tagGroups: SingleTagGroup[] }) => {
                 {tagGroups.map((tagGroup, i) => (
                     <div
                         key={tagGroup.id + i}
-                        className="p-2 group/tagItem relative rounded-md hover:bg-gray-100 transition-colors duration-200"
+                        className="min-w-[100px] text-center p-2 group/tagItem relative rounded-md hover:bg-gray-100 transition-colors duration-200"
                     >
                         <Link
                             href="/"
